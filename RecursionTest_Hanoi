@@ -1,0 +1,27 @@
+package Collection;
+
+import java.util.Scanner;
+
+public class RecursionTest_Hanoi {
+
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int n = sc.nextInt();
+		sc.close();
+
+			int result = func(n);  
+			
+			System.out.println(result);
+	}
+			
+			public static int func(int n){
+				if(n==1)
+					return n;
+				else{
+					return 2*func(n-1)+1;
+				}
+				
+			}
+}
