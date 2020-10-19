@@ -1,0 +1,22 @@
+package Collection;
+
+public class RecursionTest_Fibonacci {
+
+	public static void main(String[] args) {
+		int result = func(5);  //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+
+		System.out.println(result);
+	}
+		
+		public static int func(int n){
+			if(n<2)
+				return n;
+			else{
+				return func(n-1)+func(n-2);
+			}
+			
+		}
+	}
+
+
+	
