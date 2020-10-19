@@ -1,0 +1,64 @@
+package pjtTest;
+
+public class DataStructure_Stack {  // 스택정의
+
+	int top;
+	int[] stack;
+	int size;
+
+	public  DataStructure_Stack(int size) {   // 생성자 
+		top = -1;
+		stack = new int[size];
+		this.size = size;
+	}
+                                    //Peek , Push, Pop , PrintStack 구현
+	public int peek() { 
+		return stack[top];        
+	}
+
+	public void push(int value) {
+		stack[++top] = value;
+		System.out.println(stack[top] + " is PUSH ");
+	}
+
+	public int pop() {
+		System.out.println(stack[top] + " is POP ");
+		return stack[top--];
+	}
+
+	public void printStack() {
+		for (int i = top; i >= 0; i--)
+			System.out.println(stack[i]);
+	}
+
+
+// 구현 테스트
+
+public static void main(String args[]) {
+
+DataStructure_Stack st = new DataStructure_Stack (11);
+
+st.push(5);
+st.push(2);
+
+st.printStack();
+
+st.pop();
+st.pop();
+
+st.push(15);
+
+st.printStack();
+
+st.peek();
+
+st.pop();
+
+st.push(30);
+
+st.printStack();
+
+}
+
+}
+
