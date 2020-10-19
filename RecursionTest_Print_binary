@@ -1,0 +1,18 @@
+package Collection;
+
+public class RecursionTest_Print_binary {
+
+	public static void main(String[] args) {
+		printInBinary(9);
+	}
+	
+	public static void printInBinary(int n){
+		if(n<2)
+			System.out.print(n);
+		else{
+			printInBinary(n/2); 
+			System.out.print(n%2); //n을 2로 나눈 나머지를 인쇄한다.
+		}
+	}
+}
+
