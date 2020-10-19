@@ -5,17 +5,17 @@ public class DataStructure_Stack {
     static class Stack {
         private int top;
         private int size;
-        private int StackArr[];
+        private int stackArr[];
 
         public Stack(int stackSize) {
             top = -1;
             this.size = stackSize;
-            StackArr = new int[stackSize];
+            stackArr = new int[stackSize];
         }
 
         public void push(int data) {
-            StackArr[++top] = data;
-    		System.out.println(StackArr[top] + " is PUSH ");
+            stackArr[++top] = data;
+    		System.out.println(stackArr[top] + " is PUSH ");
 
         }
 
@@ -25,19 +25,19 @@ public class DataStructure_Stack {
             }
             
             return 
-            		StackArr[top--];
+            		stackArr[top--];
         }
 
         public int peek() {
             if (top == -1) {
                 throw new ArrayIndexOutOfBoundsException();
             }
-            return StackArr[top];
+            return stackArr[top];
         }
 
         public void printStack() {
             for (int i = top; i >= 0; --i) {
-                System.out.println(StackArr[i]);
+                System.out.println(stackArr[i]);
             }
         }
 
@@ -55,7 +55,7 @@ public class DataStructure_Stack {
         System.out.println("pop: " + st.pop()); 
         System.out.println("pop: " + st.pop()); 
         System.out.println("pop: " + st.pop()); 
-        st.printStack(); // 없음 
+        st.printStack(); 
         System.out.println("pop: " + st.pop()); 
         st.printStack(); // 없음 
     }
