@@ -2,7 +2,7 @@ package Collection;
 
 import java.util.Scanner;
 
-public class Recursion_factorial {
+public class RecursionTest_factorial {
 
 	
 	public static void main(String[] args) {
@@ -24,4 +24,6 @@ public class Recursion_factorial {
 		}
 	
 	}
+
+	
 }
