@@ -17,7 +17,7 @@ public class  {
                 left++;
                 right--;
             }
-        }while (left <= right);
+        }while (left <= right);  // left가 rigfht 보다 클때까지 반복실행
         
         if(l < right) sort(data, l, right);
         if(r > left) sort(data, left, r);
