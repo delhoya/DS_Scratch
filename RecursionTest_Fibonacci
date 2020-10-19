@@ -3,7 +3,7 @@ package Collection;
 public class RecursionTest_Fibonacci {
 
 	public static void main(String[] args) {
-		int result = func(5);  //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+		int result = func(5);  //Fibonacci 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 
 		System.out.println(result);
 	}
