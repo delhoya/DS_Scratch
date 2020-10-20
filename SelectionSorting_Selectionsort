@@ -1,6 +1,6 @@
 package Collection;
 
-public class Selection {
+public class Sorting_Selectionsort {
 
     public void sort(int[] data){
         int size = data.length;
@@ -22,7 +22,7 @@ public class Selection {
     
     public static void main(String[] args) {
             
-        Selection selection = new Selection();
+        Sorting_Selectionsort selection = new Sorting_Selectionsort();
         
         int data[] = {66, 10, 1, 99, 5};
  
