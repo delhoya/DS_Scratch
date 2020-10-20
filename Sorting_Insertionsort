@@ -1,6 +1,6 @@
 package Collection;
 
-public class Insertion {
+public class Sorting_Insertionsort {
 	 
     public void sort(int[] A){
         int temp = 0;
@@ -15,7 +15,7 @@ public class Insertion {
     }
     
     public static void main(String[] args) {
-        Insertion insertion = new Insertion();
+        Sorting_Insertionsort insertion = new Sorting_Insertionsort();
         
         int A[] = {66, 10, 1, 34, 5};
         
@@ -25,5 +25,6 @@ public class Insertion {
         }
     }
 }
+
 
 
