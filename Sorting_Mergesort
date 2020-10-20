@@ -1,6 +1,6 @@
 package Collection;
 
-public class mergesort {
+public class Sorting_Mergesort {
 	
 	public static void mergeSort(int data[], int left, int right){
 		if(left < right){
@@ -38,3 +38,4 @@ public class mergesort {
         }
 	}
 }
+
