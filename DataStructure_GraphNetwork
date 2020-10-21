@@ -6,3 +6,49 @@
 
 
 
+package Graph_07;
+
+import java.util.*;
+ 
+    class Edge <W, V> {  // Edge를 하나의 클래스로 표현하여 입력 받음
+    private W weight; // edge에 부여된 가중치 
+    private V v; // edge 끝 부분에 있는 vertex의 번호
+    
+    public void set_Edge(W weight, V v){ // edge에 값 setting하는 함수
+        this.weight = weight;
+        this.v = v;
+        }
+ 
+    }
+ 
+
+public class AdjacencyTest02 {
+ 
+    static int nV;
+    static int nE;
+        
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        AdjacencyTest02 hello = new AdjacencyTest02();
+        
+        nV = scan.nextInt();  // 전체 Vertex 개수 받기
+        nE = scan.nextInt();  // 전체 Edge 개수 받기
+        
+        ArrayList<Edge> ad = new <Edge> ArrayList();
+        Edge <Integer, Integer>ed = new  <Integer, Integer> Edge();
+        
+        for(int i = 0; i < nV; i++)
+            ad.add(new <Integer, Integer> Edge()); //edge 초기화 (메모리 할당)
+    
+        for(int i = 0; i < nE; i++){
+            int t1 = scan.nextInt(); // 시작 vertex 입력 받기
+            int t2 = scan.nextInt(); // 끝 vertex 입력 받기
+            int t3 = scan.nextInt(); // weight 입력 받기
+            
+            ad.get(t1).set_Edge(t2, t3);
+            ad.get(t2).set_Edge(t1, t3);
+        }
+    }
+}
+
+
