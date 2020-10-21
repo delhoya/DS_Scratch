@@ -1,5 +1,4 @@
-// 3가지 order 자기자신 언제 순회??
-
+// 3가지 order 
 import java.util.*;
  
 class Node{
@@ -36,9 +35,9 @@ public class Solution {
             return;
         }
         
-        Node current = root;
-        Node temp = current;
-        while(true){
+        Node current = root; 
+        Node temp = current; 
+        while(true){ 
             if(current.getData()>data){
                 current = current.getLeft();
                 if(current == null){
@@ -63,7 +62,7 @@ public class Solution {
         
     }
     
-    public static void preorder(Node node){
+    public static void preorder(Node node){   //preorder
         
         if (node == null){
             return;
@@ -77,7 +76,7 @@ public class Solution {
         
     }
     
-    public static void inorder(Node node){
+    public static void inorder(Node node){    //inoder 
         
         if (node == null){
             return;
@@ -91,7 +90,7 @@ public class Solution {
         
     }
     
-    public static void postorder(Node node){
+    public static void postorder(Node node){   //postorder
         
         if (node == null){
             return;
@@ -106,7 +105,7 @@ public class Solution {
     }
  
  
-    public static void main(String[] args) {
+    public static void main(String[] args) {    // main 함수 
         // TODO Auto-generated method stub
         
         // 데이터 입력
