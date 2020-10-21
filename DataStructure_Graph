@@ -1,1 +1,36 @@
 //
+package Graph_07;
+import java.util.*;
+ 
+ 
+public class Adjcency_Test {
+    
+    static int nV;  // 총 vertex 개수 
+    static int nE;  // 총 edge 개
+ 
+    public static void main(String[] args) {
+        
+        Scanner scan = new Scanner(System.in);
+        
+        nV = scan.nextInt();
+        nE = scan.nextInt();
+        ArrayList<ArrayList<Integer>> ad = new <ArrayList<Integer>> ArrayList(); // 인접 리스트 초기화
+        
+        
+        for(int i = 0; i < nV; i++){
+            ad.add(new<Integer> ArrayList());  //ad 리스트에 담을 리스트 초기화
+        }
+        
+        for(int i = 0; i < nE; i++){
+            int t1, t2;         // vertex 두 개 입력 받기
+            t1 = scan.nextInt();
+            t2 = scan.nextInt();
+            
+            ad.get(t1).add(t2);   // 양방향 그래프이므로, vertex 1, 2 값 초기화 
+            ad.get(t2).add(t1);
+        }
+        
+    }
+ 
+}
+
