@@ -37,6 +37,27 @@ print(a)
 print(b)
  
  
+====
+
+n = int(input())
+m = int(input())
+
+def div_num(n,m):
+
+    if n > m :
+        a = n//m
+        b = n%m
+        print(a)
+        print(b)
+    else :
+        a = m//n
+        b = m%n
+        print(a)
+        print(b)
+        
+div_num(n,m)     
+
+ 
  [문제 3] 정수 N을 입력 받아 N이 20~30사이(20과 30포함)의 정수이면 1을 출력하고 그렇지 않으
 면 0을 출력하는 프로그램을 작성하시오.
  - 논리연산과 관계연산의 결과가 참이면 1이 되고 거짓이면 0이 됨을 이용하시오.
