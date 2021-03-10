@@ -75,5 +75,14 @@ else :
  예) 52561 à 5+2+5+6+1 = 19 à 1+9 = 10 à 1+0 = 1
  - 중첩 while 문 이용해야 해결됩니다
  
- 
+ n = int(input())
+
+def digital_root(n):
+    if n < 10:
+         return n
+    
+    digits = [int(c) for c in list(str(n))]
+    return digital_root(sum(digits))
+
+digital_root(n)
  
