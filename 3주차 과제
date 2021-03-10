@@ -19,6 +19,25 @@
   - main 함수
  - 정수를 입력 받고, die1 함수를 6번 호출
  
+ n = int(input())
+
+def die1(x):
+    for y in range(7):
+        die2(x,y)
+def die2(x,y):
+    for z in range(7):
+        die3(x,y,z)
+def die3(x,y,z):
+    if (x+y+z == n and x>0 and y>0 and z>0) :
+        print(x,y,z)
+
+die1(1)
+die1(2)
+die1(3)
+die1(4)
+die1(5)
+die1(6)
+ 
  
  [문제 2] 서로 다른 두 양의 정수 N, M을 입력 받아 큰 수에서 작은 수를 나눈 몫과 나머지를 출력
 하는 프로그램을 작성하시오.
