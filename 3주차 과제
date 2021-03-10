@@ -103,7 +103,7 @@ def digital_root(n):
          return n
     # 자리수를 쉽게 나누기 위해 String list 타입으로 (타입캐스팅) 나눈 후 다시 int 타입의 리스트로 (타입캐스팅) 저장
     digits = [int(c) for c in list(str(n))]
-    # int 타입 리스트의 sum () 함수 이용하여 각 자리수 합 구해줌 + 재귀함수 적용
+    # sum () 함수 이용하여 각 자리수 합 구해줌 + 재귀함수 적용
     return digital_root(sum(digits))
 
 digital_root(n) 
