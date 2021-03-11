@@ -20,7 +20,7 @@ if __name__ == "__main__":
         die1(a)
 
 
-# 주어진 조건 n!= m 인 두 양수에 분기 적용
+# 주어진 조건 n!= m 인 두 수에 분기 적용
 n = int(input())
 m = int(input())
 
