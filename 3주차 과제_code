@@ -1,0 +1,56 @@
+n = int(input())
+
+#die1 함수 인자 x , 내부 die2함수 호출
+def die1(x):
+    for y in range(7):
+        die2(x,y)
+#die2함수 인자 x,y 내부 die3함수 호출        
+def die2(x,y):
+    for z in range(7):
+        die3(x,y,z)
+#die2함수 인자 x,y,z 내부 die3함수 호출 
+def die3(x,y,z):
+    if (x+y+z == n and x>0 and y>0 and z>0) :
+        print(x,y,z)
+
+# 메인 함수 die1 함수 6번 호출
+if __name__ == "__main__":
+
+    for a in range(7):
+        die1(a)
+
+
+# 주어진 조건 n!= m 인 두 양수에 분기 적용
+n = int(input())
+m = int(input())
+
+if n > m :
+    a = n//m
+    b = n%m
+else :
+    a = m//n
+    b = m%n
+print(a)
+print(b)
+
+
+# 조건문 if 과 and 를 이용하여 범위 설정
+n = int(input())
+if n>19 and n<31:
+    print(1)
+else :
+    print(0)
+    
+
+n = int(input())
+
+def digital_root(n):
+    # n < 10 일때 n 리턴
+    if n < 10:
+         return n
+    # String (타입캐스팅)후 한 자리 식 int 타입 캐스팅 and 리스트 [ ] (digits)로 저장
+    digits = [int(c) for c in list(str(n))]
+    # sum () 함수 이용하여 각 자리수 합 sum(digits) 계산 / 재귀함수 적용
+    return digital_root(sum(digits))
+
+digital_root(n)
