@@ -41,7 +41,8 @@ if n>19 and n<31:
 else :
     print(0)
     
-
+    
+# 입력값 n 전역변수 설정
 n = int(input())
 
 def digital_root(n):
