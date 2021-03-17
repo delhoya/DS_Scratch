@@ -22,7 +22,7 @@ class dlist:
             self.next = next
     
     # 링크드 리스트 생성자 
-    # head ,tail 은 내용 없음(방향만)
+    # head ,tail 은 내용 없음(더미)(초기화)
     def __init__(self):
         self.head = self.node(None,None,None)
         self.tail = self.node(None,self.head,None)
