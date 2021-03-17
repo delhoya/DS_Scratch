@@ -55,7 +55,7 @@ class dlist:
         t.prev = n
         self.size +=1
     
-    # f (front)와 r (rear) 을 이용하여 x의 전 후를 먼저 가리키게하고
+    # 노드 삭제 f (front)와 r (rear) 을 이용하여 x의 전 후를 먼저 가리키게하고
     # f.next 와 r.prev 를 연결함 
     def delete(self,x):
         f = x.prev
@@ -65,6 +65,8 @@ class dlist:
         self.size -=1
         return x.item
     
+    # 노드 순회 / 출력 
+    # 비어있지 않은 경우 , tail 일때 item 반환
     def print_list(self):
         if self.isempty():
             print('list is empty')
