@@ -65,7 +65,7 @@ class dlist:
         self.size -=1
         return x.item
     
-    # 노드 순회 / 출력 
+    # 노드 출력 
     # 비어있지 않은 경우 , tail 일때 item 반환
     def print_list(self):
         if self.isempty():
