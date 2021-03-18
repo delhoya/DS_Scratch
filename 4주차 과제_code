@@ -2,6 +2,12 @@ https://wikidocs.net/34534
 https://ctrlaltdileep.me/how-to-code-a-linked-list-in-python/
 
 
+    # add(list, r, e) : list의 순위 r에 원소 e를 추가한다. 
+    # delete(list, r) : list의 순위 r에 위치한 원소를 삭제한다. 
+    # get(list, r) : list의 순위 r에 위치한 원소를 반환한다.
+    # print(list) : list의 모든 원소를 저장 순위대로 공백없이 출력한다
+
+
 def switch_linked_list(idx):
     dict_linked_list = {
         
