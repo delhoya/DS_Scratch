@@ -4,9 +4,10 @@ https://stonesoupprogramming.com/2017/05/20/doubly-linked-list-python/
 
 https://stackoverflow.com/questions/33004034/how-to-implement-insert-method-in-a-doubly-linked-list
 
+
 class DLLNode:
-    def __init__(self, initdata):
-        self.data = initdata
+    def __init__(self, data):
+        self.data = data
         self.next = None
         self.prev = None
 
@@ -22,14 +23,14 @@ class DLLNode:
     def getPrev(self):
         return self.prev
 
-    def setData(self, new_data):
-        self.data = new_data
+    def setData(self, data):
+        self.data = data
 
-    def setNext(self, new_next):
-        self.next = new_next
+    def setNext(self, next):
+        self.next = next
 
-    def setPrev(self, new_prev):
-        self.prev = new_prev
+    def setPrev(self, prev):
+        self.prev = prev
 
 
 class DLL:
@@ -37,6 +38,7 @@ class DLL:
     def __init__(self):
         """ Constructs an empty doubly-linked list. """
         self.head = None
+        self.tail = None
         self.size = 0
 
     def __str__(self):
@@ -71,12 +73,14 @@ class DLL:
         else:  # added else case to prevent overlap
             for x in range(0, index - 1):  # Obtain the current
                 current = current.next  # move to the next item
+
         # If the index is the first node...
         if index == 0:
             n.setNext(self.head)
             self.head = n
             if self.size == 0:
                 self.prev = n
+
         # If the index is the last node...
         elif index == self.size:
             current.setNext(n)  # set n to be the next of current
@@ -92,6 +96,57 @@ class DLL:
 
         self.size += 1
 
+    def get(self, index):
+
+            index = int(index)
+            length = self.size
+            count = 0
+
+            if length == 0:
+                return None
+
+            elif index >= length:
+                print(" index out of range! ")
+                # this should be an error for the real thing
+                # raise IndexError
+                return None
+
+            else:
+                count = 0
+                node = self.head
+                while node:
+                #print(f"while loop.{count}")
+                    if count == index:
+                        print('get return value:')
+                        print(node.data)
+                        return node.data
+
+
+                    node = node.next
+                    count += 1
+
+    def delete(self, index):
+
+        index = int(index)
+        length = self.size
+        count = 0
+
+        if length == 0:
+            return None
+
+        elif index >= length:
+            print(" index out of range! ")
+            # this should be an error for the real thing
+            # raise IndexError
+            return None
+
+        else:
+            f = index.prev
+            r = index.next
+            f.next = r
+            r.prev = f
+            self.size -= 1
+            return index.item
 
 l = DLL()
 l.insert(88, 0)
@@ -101,5 +156,33 @@ l.insert(55, 3)
 l.insert(34, 1)
 l.insert(3, 0)
 l.insert(15, 6)
-l.insert(100, 8)
+l.insert("a", 0)
+l.get(5)
+l.delete(5)
+
 print(l)
+
+
+def deleteNodeAtGivenPos(head_ref, n):
+    # if list in None or invalid position is given
+    if (head_ref == None or n <= 0):
+        return
+
+    current = head_ref
+    i = 1
+
+    # traverse up to the node at position 'n' from
+    # the beginning
+    while (current != None and i < n):
+        current = current.next
+        i = i + 1
+
+    # if 'n' is greater than the number of nodes
+    # in the doubly linked list
+    if (current == None):
+        return
+
+    # delete the node pointed to by 'current'
+    deleteNode(head_ref, current)
+
+    return head_ref
