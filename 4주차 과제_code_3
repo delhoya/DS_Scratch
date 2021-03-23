@@ -1,0 +1,96 @@
+
+class Node:
+    def __init__(self,data=None,prev=None,next=None):
+        self.data = data
+        self.prev = prev
+        self.next = next
+
+
+class DLlist:
+
+    def __init__(self,data=None,head=None,tail=None):
+        self.data = Node(data)
+        self.head = Node(None,None,None)
+        self.tail = Node(None,None,None)
+        self.size = 0
+
+    def print(self):
+        if self.head is None:
+            print('empty')
+        else:
+            temp = self.head
+            while temp:
+                print(temp.data, end = " ")
+                temp = temp.next
+            print()
+
+    def size(self):
+        return self.size
+
+    def add(self,index,item):
+
+        new_node = Node(item)
+        temp_node = self.head
+
+        if index == 0 :
+
+            self.head = new_node
+            self.size +=1
+
+        elif  0 < index <= self.size:
+            while index != self.size:
+                temp_node = temp_node.next
+                index += 1
+            new_node.prev = temp_node
+            temp_node.next = new_node
+            self.size += 1
+
+        else :
+            print("invalid position")
+
+    def delete(self,index):
+
+        temp_node = self.head
+
+        if self.size == 0 :
+            print("invalid position")
+
+        elif index > self.size:
+            print("invalid position")
+
+        else:
+            for i in range(index):
+                temp_node = temp_node.next
+                i += 1
+
+            temp_node.prev = temp_node.next
+            temp_node.next = temp_node.prev
+
+    def get(self,index):
+
+        temp_node = self.head
+
+        if index ==0:
+            return print(self.head.data)
+
+        if 0 < index <= self.size:
+            for i in range (index):
+                temp_node = temp_node.next
+                i += 1
+            return print(temp_node.data)
+
+        if index > self.size:
+            print("invalid position")
+
+
+
+
+if __name__ == '__main__':
+
+    n = int(input())
+
+
+    dllist = DLlist()
+    dllist.add(0,"D")
+    dllist.add(1,"A")
+    dllist.get(0)
