@@ -2,6 +2,18 @@ https://wikidocs.net/34534
 https://ctrlaltdileep.me/how-to-code-a-linked-list-in-python/
 
 
+9 ↦ 연산의 개수: 9
+A 1 D ↦ add(list, 1, 'D')
+A 2 a ↦ add(list, 2, 'a')
+A 3 y ↦ add(list, 3, 'y')
+D 1 ↦ delete(list, 1)
+P ↦ print(list)
+G 3 ↦ get_entry(list, 3)
+A 1 S ↦ add(list, 1, 'S')
+P ↦ print(list)
+G 3 ↦ get_entry(list, 3
+
+
     # add(list, r, e) : list의 순위 r에 원소 e를 추가한다. 
     # delete(list, r) : list의 순위 r에 위치한 원소를 삭제한다. 
     # get(list, r) : list의 순위 r에 위치한 원소를 반환한다.
