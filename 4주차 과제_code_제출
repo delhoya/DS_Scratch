@@ -1,3 +1,4 @@
+
 class Node:
     # 이중 연결 리스트 생성자
     def __init__(self, data, prev, next):
@@ -23,7 +24,7 @@ class dlist:
     def isempty(self):
         return self.size == 0
 
-    def insert(self, index, data):
+    def add(self, index, data):
 
         # 신규 노드 생성 (아직 연결은 하지 않은 상태)
         new_node = Node(data,prev=None,next=None)
@@ -66,7 +67,7 @@ class dlist:
         else:
             for i in range(index):
                 temp_head = temp_head.next
-        # 해당 노드의 data 를 출력         
+        # 해당 노드의 data 를 출력
             print(temp_head.data)
 
     def delete(self, index):
@@ -74,7 +75,7 @@ class dlist:
         # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
 
-        # 삭제할 노드가 1개만 있는 경우 
+        # 삭제할 노드가 1개만 있는 경우
         if self.size ==1:
         # head 와 tail 을 연결해준다 (생성자 초기상태)
             self.head.next = self.tail
@@ -96,7 +97,7 @@ class dlist:
             temp_next = self.head.next
             while temp_next != self.tail:
                 if temp_next.next != self.tail:
-                    print(temp_next.data, end=' ')
+                    print(temp_next.data, end='')
                 else:
                     print(temp_next.data)
                 temp_next = temp_next.next
@@ -104,15 +105,33 @@ class dlist:
 
 if __name__ == '__main__':
     s = dlist()
-    s.insert(1,"S")
-    s.insert(2,"T")
-    s.insert(3,"R")
-    s.insert(2,"O")
-    s.print()
+    s.add(1, "D")
+    s.add(2, "a")
+    s.add(3, "y")
     s.delete(1)
     s.print()
-    s.delete(2)
-    s.print()
-    s.get(1)
-    s.get(2)
     s.get(3)
+    s.add(1, "s")
+    s.print()
+    s.get(3)
+
+"""
+A 1 D ↦ add(list, 1, 'D')
+A 2 a ↦ add(list, 2, 'a')
+A 3 y ↦ add(list, 3, 'y')
+D 1 ↦ delete(list, 1)
+P ↦ print(list)
+G 3 ↦ get_entry(list, 3)
+A 1 S ↦ add(list, 1, 'S')
+P ↦ print(list)
+G 3 ↦ get_entry(list, 3) 
+
+5 ↦ 연산의 개수: 5
+A 1 S ↦ add(list, 1, 'S')
+A 2 t ↦ add(list, 2, 't')
+A 3 r ↦ add(list, 3, 'r')
+A 3 a ↦ add(list, 3, 'a')
+P ↦ print(list)
+
+
+"""
