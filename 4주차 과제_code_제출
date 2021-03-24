@@ -1,0 +1,99 @@
+class Node:
+
+    def __init__(self, data, prev, next):
+        self.data = data
+        self.prev = prev
+        self.next = next
+
+
+class dlist:
+
+    def __init__(self):
+        self.head = Node(None, None, None)
+        self.tail = Node(None, None, None)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.size = 0
+
+    def size(self):
+        return self.size
+
+    def isempty(self):
+        return self.size == 0
+
+    def insert(self, index, data):
+
+        new_node = Node(data,prev=None,next=None)
+        temp_head = self.head
+
+        if self.size ==0 :
+            self.head.next = new_node
+            new_node.prev = self.head
+            new_node.next = self.tail
+            self.tail.prev = new_node
+            self.size += 1
+
+        else:
+            for i in range(index-1):
+                temp_head = temp_head.next
+            temp_head.next.prev = new_node
+            new_node.next = temp_head.next
+            temp_head.next = new_node
+            new_node.prev = temp_head
+            self.size += 1
+
+    def get(self,index):
+
+        temp_head = self.head
+
+        if index > self.size :
+            print("invalid postion")
+        else:
+            for i in range(index):
+                temp_head = temp_head.next
+
+            print(temp_head.data)
+
+    def delete(self, index):
+
+        temp_head = self.head
+
+        if self.size ==1:
+            self.head.next = self.tail
+            self.tail.prev = self.head
+            self.size -=1
+        else:
+            for i in range (index+1):
+                temp_head = temp_head.next
+            temp_head.prev.prev.next = temp_head
+            temp_head.prev = temp_head.prev.prev
+            self.size -=1
+
+
+    def print(self):
+        if self.isempty():
+            print('invalid position')
+        else:
+            temp_next = self.head.next
+            while temp_next != self.tail:
+                if temp_next.next != self.tail:
+                    print(temp_next.data, end=' ')
+                else:
+                    print(temp_next.data)
+                temp_next = temp_next.next
+
+
+if __name__ == '__main__':
+    s = dlist()
+    s.insert(1,"S")
+    s.insert(2,"T")
+    s.insert(3,"R")
+    s.insert(2,"O")
+    s.print()
+    s.delete(1)
+    s.print()
+    s.delete(2)
+    s.print()
+    s.get(1)
+    s.get(2)
+    s.get(3)
