@@ -29,8 +29,8 @@ G 3 ↦ get_entry(list, 3
 
 class Node:
 
-    def __init__(self, item, prev, next):
-        self.item = item
+    def __init__(self, data, prev, next):
+        self.item = data
         self.prev = prev
         self.next = next
 
