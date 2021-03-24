@@ -1,6 +1,9 @@
 https://wikidocs.net/34534
 https://ctrlaltdileep.me/how-to-code-a-linked-list-in-python/
 https://github.com/rajputd/python_algorithms_and_data_structures/blob/master/linked_list/LinkedList.py
+https://www.gousios.gr/courses/algo-ds/assignment-lists-solutions.html
+https://stonesoupprogramming.com/2017/05/20/doubly-linked-list-python/
+https://stackoverflow.com/questions/33004034/how-to-implement-insert-method-in-a-doubly-linked-list
 
 9 ↦ 연산의 개수: 9
 A 1 D ↦ add(list, 1, 'D')
