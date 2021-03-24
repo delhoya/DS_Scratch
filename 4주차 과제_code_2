@@ -76,7 +76,7 @@ class Dllist:
         node.prev = new_node
         self.size += 1
 
-    def insertLast(self, data):
+    def insert_tail(self, data):
         new_node = Node(data)
         if self.head.next == None:
             self.head.next = new_node
@@ -122,8 +122,8 @@ class Dllist:
 
 if __name__ == "__main__":
     dll = Dllist(1)
-    dll.insertLast(5)
-    dll.insertLast(6)
+    dll.insert_tail(5)
+    dll.insert_tail(6)
     print(dll)
     print(dll.sizeof())
 
