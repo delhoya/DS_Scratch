@@ -57,7 +57,7 @@ class Dllist:
             print(str(node.data))
 
 
-    def insertFirst(self, data):
+    def inserthead(self, data):
         new_node = Node(data)
         if not self.head.prev == None:
             new_node.prev = self.head.prev
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     dll.insert(1, 15)
     print(dll)
 
-    dll.insertFirst(100)
+    dll.inserthead(100)
     print(dll)
 
     dll.delete(0)
