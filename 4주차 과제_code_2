@@ -47,12 +47,9 @@ class Dllist:
         return node
 
     def get(self,num):
-
         node = self.get_index_node(num)
-
         if self.size < num:
             print("invalid position")
-
         else:
             print(str(node.data))
 
@@ -141,3 +138,6 @@ if __name__ == "__main__":
     dll.get(0)
     dll.get(1)
     dll.get(3)
+
+
+    
