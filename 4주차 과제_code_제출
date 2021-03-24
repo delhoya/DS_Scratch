@@ -1,18 +1,20 @@
 class Node:
-
+    # 이중 연결 리스트 생성자
     def __init__(self, data, prev, next):
         self.data = data
         self.prev = prev
         self.next = next
 
-
 class dlist:
 
     def __init__(self):
+        # head 와 tail 더미 노드 생성
         self.head = Node(None, None, None)
         self.tail = Node(None, None, None)
+        # head 와 tail 더미 노드 연결
         self.head.next = self.tail
         self.tail.prev = self.head
+        # 리스트 사이즈
         self.size = 0
 
     def size(self):
@@ -23,48 +25,65 @@ class dlist:
 
     def insert(self, index, data):
 
+        # 신규 노드 생성 (아직 연결은 하지 않은 상태)
         new_node = Node(data,prev=None,next=None)
+        # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
 
+        # 노드가 없을 경우
         if self.size ==0 :
+            # 삽입 노드를 Head 와 이중 연결
             self.head.next = new_node
             new_node.prev = self.head
+            # 삽입 노드를 tail 과 이중 연결
             new_node.next = self.tail
             self.tail.prev = new_node
+            # 사이즈 +1
             self.size += 1
 
         else:
+            # 인덱스 순회
             for i in range(index-1):
                 temp_head = temp_head.next
+            # 사이에 이중 연결
             temp_head.next.prev = new_node
             new_node.next = temp_head.next
+            # 사이에 이중 연결
             temp_head.next = new_node
             new_node.prev = temp_head
+            # 사이즈 +1
             self.size += 1
 
     def get(self,index):
 
+        # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
 
+        # index 가 사이즈 초과할 경우
         if index > self.size :
             print("invalid postion")
+
         else:
             for i in range(index):
                 temp_head = temp_head.next
-
+        # 해당 노드의 data 를 출력         
             print(temp_head.data)
 
     def delete(self, index):
 
+        # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
 
+        # 삭제할 노드가 1개만 있는 경우 
         if self.size ==1:
+        # head 와 tail 을 연결해준다 (생성자 초기상태)
             self.head.next = self.tail
             self.tail.prev = self.head
             self.size -=1
         else:
             for i in range (index+1):
                 temp_head = temp_head.next
+        # 삭제할 노드를 건너뛰어주고 연결
             temp_head.prev.prev.next = temp_head
             temp_head.prev = temp_head.prev.prev
             self.size -=1
