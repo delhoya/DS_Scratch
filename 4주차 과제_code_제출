@@ -105,17 +105,31 @@ class dlist:
 
 if __name__ == '__main__':
     s = dlist()
-    s.add(1, "D")
-    s.add(2, "a")
-    s.add(3, "y")
-    s.delete(1)
-    s.print()
-    s.get(3)
-    s.add(1, "s")
-    s.print()
-    s.get(3)
+    n = int(input('연산의 개수: '))
+    for i in range (n):
+        s1, s2 ,s3 = input('(연산,인덱스,데이터) : ').split()
+        if s1 == "A":
+            s2= int(s2)
+            s.add(s2,s3)
+        elif s1 == "D":
+            s2 = int(s2)
+            s.delete(s2)
+        elif s1 == "P":
+            s.print()
+        elif s1 == "G":
+            s2 = int(s2)
+            s.get(s2)
+
 
 """
+5 ↦ 연산의 개수: 5
+A 1 S ↦ add(list, 1, 'S')
+A 2 t ↦ add(list, 2, 't')
+A 3 r ↦ add(list, 3, 'r')
+A 3 a ↦ add(list, 3, 'a')
+P ↦ print(list)
+
+9 ↦ 연산의 개수: 9
 A 1 D ↦ add(list, 1, 'D')
 A 2 a ↦ add(list, 2, 'a')
 A 3 y ↦ add(list, 3, 'y')
@@ -124,14 +138,6 @@ P ↦ print(list)
 G 3 ↦ get_entry(list, 3)
 A 1 S ↦ add(list, 1, 'S')
 P ↦ print(list)
-G 3 ↦ get_entry(list, 3) 
-
-5 ↦ 연산의 개수: 5
-A 1 S ↦ add(list, 1, 'S')
-A 2 t ↦ add(list, 2, 't')
-A 3 r ↦ add(list, 3, 'r')
-A 3 a ↦ add(list, 3, 'a')
-P ↦ print(list)
-
+G 3 ↦ get_entry(list, 3)
 
 """
