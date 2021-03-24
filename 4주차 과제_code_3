@@ -1,96 +1,155 @@
 
 class Node:
-    def __init__(self,data=None,prev=None,next=None):
+    def __init__(self, data):
         self.data = data
-        self.prev = prev
-        self.next = next
+        self.next = None
+        self.prev = None
 
+    def __str__(self):
+        return str(self.data)
 
-class DLlist:
+class Dllist:
+    def __init__(self, data):
+        new_node = Node(data)
+        self.head = new_node
+        self.size = 1
 
-    def __init__(self,data=None,head=None,tail=None):
-        self.data = Node(data)
-        self.head = Node(None,None,None)
-        self.tail = Node(None,None,None)
-        self.size = 0
+    def __str__(self):
+        print_list = ''
+        node = self.head
+        while True:
+            print_list += str(node)
+            if node.next == self.head:
+                break
+            node = node.next
+            print_list += ' '
+        print_list += ' '
+        return print_list
 
-    def print(self):
-        if self.head is None:
-            print('empty')
+    def get_index(self, num):
+
+        if self.size < 1:
+            return # Underflow
+        elif self.size <= num:
+            return # Overflow
+
+        count = 0
+        node = self.head
+
+        if int(self.size / 2) > num:
+            while count < num:
+                node = node.next
+                count += 1
         else:
-            temp = self.head
-            while temp:
-                print(temp.data, end = " ")
-                temp = temp.next
-            print()
+            repeat = self.size - num
+            while count < repeat:
+                node = node.prev
+                count += 1
+        return node
 
-    def size(self):
-        return self.size
+    def get(self,num):
 
-    def add(self,index,item):
+        node = self.get_index(num)
 
-        new_node = Node(item)
-        temp_node = self.head
-
-        if index == 0 :
-
-            self.head = new_node
-            self.size +=1
-
-        elif  0 < index <= self.size:
-            while index != self.size:
-                temp_node = temp_node.next
-                index += 1
-            new_node.prev = temp_node
-            temp_node.next = new_node
-            self.size += 1
-
-        else :
-            print("invalid position")
-
-    def delete(self,index):
-
-        temp_node = self.head
-
-        if self.size == 0 :
-            print("invalid position")
-
-        elif index > self.size:
+        if self.size < num:
             print("invalid position")
 
         else:
-            for i in range(index):
-                temp_node = temp_node.next
-                i += 1
+            print(str(node.data))
 
-            temp_node.prev = temp_node.next
-            temp_node.next = temp_node.prev
 
-    def get(self,index):
+    def insertFirst(self, data):
+        new_node = Node(data)
+        if not self.head.prev == None:
+            new_node.prev = self.head.prev
+            self.head.prev.next = new_node
+        if not self.head.next == None:
+            new_node.next = self.head.next
+        self.head.prev = new_node
+        self.head = new_node
 
-        temp_node = self.head
+    def insertMiddleAfter(self, num, data):
+        node = self.get_index(num)
+        new_node = Node(data)
+        new_node.prev = node
+        new_node.next = node.next
+        node.next.prev = new_node
+        node.next = new_node
+        self.size += 1
 
-        if index ==0:
-            return print(self.head.data)
+    def insert(self, num, data):
+        node = self.get_index(num)
+        new_node = Node(data)
+        new_node.prev = node.prev
+        new_node.next = node
+        node.prev.next = new_node
+        node.prev = new_node
+        self.size += 1
 
-        if 0 < index <= self.size:
-            for i in range (index):
-                temp_node = temp_node.next
-                i += 1
-            return print(temp_node.data)
+    def insertLast(self, data):
+        new_node = Node(data)
+        if self.head.next == None:
+            self.head.next = new_node
+            new_node.prev = self.head
 
-        if index > self.size:
+        if not self.head.prev == None:
+            self.head.prev.next = new_node
+            new_node.prev = self.head.prev
+        self.head.prev = new_node
+        new_node.next = self.head
+        self.size += 1
+
+
+    def delete(self, num):
+        if self.size < 1:
             print("invalid position")
+            return
+        elif self.size <= num:
+            print("invalid position")
+            return
+
+        if num == 0:
+            self.deleteHead()
+            return
+        node = self.get_index(num)
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        del node
+        self.size -= 1
+
+    def deleteHead(self):
+        node = self.head
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self.head = node.next
+        del node
+        self.size -= 1
+
+    def sizeof(self):
+        return str(self.size)
 
 
 
+if __name__ == "__main__":
+    dll = Dllist(1)
+    dll.insertLast(5)
+    dll.insertLast(6)
+    print(dll)
+    print(dll.sizeof())
+    print(dll.get_index(1))
 
-if __name__ == '__main__':
+    dll.insert(1, 15)
+    print(dll)
 
-    n = int(input())
+    dll.insertFirst(100)
+    print(dll)
+    print(dll.get_index(0))
 
-
-    dllist = DLlist()
-    dllist.add(0,"D")
-    dllist.add(1,"A")
-    dllist.get(0)
+    dll.delete(0)
+    print(dll)
+    dll.delete(1)
+    print(dll)
+    print("====")
+    dll.get(0)
+    dll.get(1)
+    dll.get(3)
