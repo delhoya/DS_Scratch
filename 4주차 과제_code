@@ -87,14 +87,14 @@ class dlist:
 if __name__ == '__main__':
 
     s = dlist()
-    s.insert_after(s.head, 'a')
-    s.insert_before(s.tail, 'o')
-    s.insert_before(s.tail, 'c')
-    s.insert_after(s.head.next, 'p')
+    s.insert_after(s.head, 'S')
+    s.insert_before(s.tail, 'Z')
+    s.insert_before(s.tail, 'A')
+    s.insert_after(s.head.next, 'R')
     s.print_list()
 
     s.delete(s.tail.prev)
     s.print_list()
 
-    s.insert_before(s.tail, 'g')
+    s.insert_before(s.tail, 'Q')
     s.print_list()
