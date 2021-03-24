@@ -70,7 +70,7 @@ class dlist:
         f.next = r
         r.prev = f
         self.size -= 1
-        return x.item
+        return 
 
     def print_list(self):
         if self.isempty():
@@ -87,14 +87,14 @@ class dlist:
 if __name__ == '__main__':
 
     s = dlist()
-    s.insert_after(s.head, 'S')
-    s.insert_before(s.tail, 'Z')
-    s.insert_before(s.tail, 'A')
-    s.insert_after(s.head.next, 'R')
+    s.insert_after(s.head, 'M')
+    s.insert_before(s.tail, 'N')
+    s.insert_before(s.tail, 'B')
+    s.insert_after(s.head.next, 'V')
     s.print_list()
 
     s.delete(s.tail.prev)
     s.print_list()
 
-    s.insert_before(s.tail, 'Q')
+    s.insert_before(s.tail, 'C')
     s.print_list()
