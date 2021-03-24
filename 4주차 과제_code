@@ -50,19 +50,23 @@ class dlist:
     def isempty(self):
         return self.size == 0
 
-    def insert_before(self, p, item):
-        t = p.prev
-        n = Node(item, t, p)
-        p.prev = n
-        t.next = n
+    def insert_before(self, index, item):
+        temp_prev = index.prev
+        n = Node(item, temp_prev, index)
+        index.prev = n
+        temp_prev.next = n
         self.size += 1
 
-    def insert_after(self, p, item):
-        t = p.next
-        n = Node(item, p, t)
-        p.next = n
-        t.prev = n
+    def insert_after(self, index, item):
+        temp_next = index.next
+        n = Node(item, index, temp_next)
+        index.next = n
+        temp_next.prev = n
         self.size += 1
+
+    def insert(self, index, item):
+
+        pass
 
     def delete(self, x):
         f = x.prev
@@ -70,7 +74,7 @@ class dlist:
         f.next = r
         r.prev = f
         self.size -= 1
-        return 
+        return
 
     def print_list(self):
         if self.isempty():
@@ -84,17 +88,17 @@ class dlist:
                     print(p.item)
                 p = p.next
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     s = dlist()
-    s.insert_after(s.head, 'M')
-    s.insert_before(s.tail, 'N')
-    s.insert_before(s.tail, 'B')
-    s.insert_after(s.head.next, 'V')
+    s.insert_after(s.head, '1')
+    s.insert_before(s.tail, '2')
+    s.insert_before(s.tail, '3')
+    s.insert_after(s.head.next, '4')
     s.print_list()
 
     s.delete(s.tail.prev)
     s.print_list()
 
-    s.insert_before(s.tail, 'C')
+    s.insert_before(s.tail, '5')
     s.print_list()
