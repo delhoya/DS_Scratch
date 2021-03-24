@@ -67,12 +67,16 @@ class dlist:
     def insert(self, index, item):
 
         pass
+    
+    def get(self,index):
+        
+        pass
 
-    def delete(self, x):
-        f = x.prev
-        r = x.next
-        f.next = r
-        r.prev = f
+    def delete(self, index):
+        temp_prev = index.prev
+        temp_next = index.next
+        temp_prev.next = temp_next
+        temp_next.prev = temp_prev
         self.size -= 1
         return
 
@@ -87,18 +91,3 @@ class dlist:
                 else:
                     print(p.item)
                 p = p.next
-
-
-if __name__ == '__main__':
-    s = dlist()
-    s.insert_after(s.head, '1')
-    s.insert_before(s.tail, '2')
-    s.insert_before(s.tail, '3')
-    s.insert_after(s.head.next, '4')
-    s.print_list()
-
-    s.delete(s.tail.prev)
-    s.print_list()
-
-    s.insert_before(s.tail, '5')
-    s.print_list()
