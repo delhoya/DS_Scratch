@@ -25,14 +25,12 @@ class dlist:
         return self.size == 0
 
     def add(self, index, data):
-
         # 신규 노드 생성 (아직 연결은 하지 않은 상태)
-        new_node = Node(data,prev=None,next=None)
+        new_node = Node(data, prev=None, next=None)
         # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
-
         # 노드가 없을 경우
-        if self.size ==0 :
+        if self.size == 0:
             # 삽입 노드를 Head 와 이중 연결
             self.head.next = new_node
             new_node.prev = self.head
@@ -41,7 +39,6 @@ class dlist:
             self.tail.prev = new_node
             # 사이즈 +1
             self.size += 1
-
         else:
             # 인덱스 순회
             for i in range(index-1):
@@ -55,15 +52,13 @@ class dlist:
             # 사이즈 +1
             self.size += 1
 
-    def get(self,index):
+    def get(self, index):
 
         # index 를 이동할 temp_node 생성 (시작기준 :head 노드 )
         temp_head = self.head
-
-        # index 가 사이즈 초과할 경우
+        # index 사이즈 초과할 경우
         if index > self.size :
-            print("invalid postion")
-
+            print("invalid position")
         else:
             for i in range(index):
                 temp_head = temp_head.next
@@ -76,18 +71,17 @@ class dlist:
         temp_head = self.head
 
         # 삭제할 노드가 1개만 있는 경우
-        if self.size ==1:
-        # head 와 tail 을 연결해준다 (생성자 초기상태)
+        if self.size == 1:
             self.head.next = self.tail
             self.tail.prev = self.head
-            self.size -=1
+            self.size -= 1
         else:
-            for i in range (index+1):
+            for i in range(index+1):
                 temp_head = temp_head.next
         # 삭제할 노드를 건너뛰어주고 연결
             temp_head.prev.prev.next = temp_head
             temp_head.prev = temp_head.prev.prev
-            self.size -=1
+            self.size -= 1
 
 
     def print(self):
@@ -106,11 +100,11 @@ class dlist:
 if __name__ == '__main__':
     s = dlist()
     n = int(input('연산의 개수: '))
-    for i in range (n):
-        s1, s2 ,s3 = input('(연산,인덱스,데이터) : ').split()
+    for i in range(n):
+        s1, s2, s3 = input('(연산,인덱스,데이터) : ').split()
         if s1 == "A":
-            s2= int(s2)
-            s.add(s2,s3)
+            s2 = int(s2)
+            s.add(s2, s3)
         elif s1 == "D":
             s2 = int(s2)
             s.delete(s2)
@@ -122,6 +116,7 @@ if __name__ == '__main__':
 
 
 """
+출력테스트1
 5 ↦ 연산의 개수: 5
 A 1 S ↦ add(list, 1, 'S')
 A 2 t ↦ add(list, 2, 't')
@@ -129,6 +124,7 @@ A 3 r ↦ add(list, 3, 'r')
 A 3 a ↦ add(list, 3, 'a')
 P ↦ print(list)
 
+출력테스트2 
 9 ↦ 연산의 개수: 9
 A 1 D ↦ add(list, 1, 'D')
 A 2 a ↦ add(list, 2, 'a')
