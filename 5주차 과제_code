@@ -6,20 +6,20 @@ class Stack:
     # 비어있는 리스트의 len (크기) = 0
     def isEmpty(self):
         return len(self.top) == 0
-    # 리스트 len (크기) 반환 
+    # 리스트 len (크기) 반환
     def size (self):
         return len(self.top)
     # 리스트 초기화 []
     def clear(self):
         self.top == []
-    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 pop  
+    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 pop
     def pop(self):
         if not self.isEmpty():
             return self.top.pop(-1)
-    # append 함수를 이용하여 리스트에 추가 
+    # append 함수를 이용하여 리스트에 추가
     def push(self,item):
         self.top.append(item)
-    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 출력 
+    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 출력
     def peek(self):
         if not self.isEmpty():
             return self.top[-1]
@@ -34,27 +34,27 @@ class Stack:
         word5 = check.count("(")
         word6 = check.count(")")
         return (word1+word2+word3+word4+word5+word6)
-    
-    # 괄호 체크 
+
+    # 괄호 체크
     def checkBrackets(statement):
-        
+
         # 스택 클래스의 객체 (stack) 생성
         stack = Stack()
-        # 매개변수에 할당된 문자열 갯수만큼 반복 진행 
+        # 매개변수에 할당된 문자열 갯수만큼 반복 진행
         for ch in statement:
-            # 왼쪽 괄호가 먼저 나올시 
+            # 왼쪽 괄호가 먼저 나올시
             if ch in ('{','[','('):
                 # 스택에 Push
                 stack.push(ch)
             elif ch in ('}',']',')'):
-                # 스택이 비어있을 경우 False 반환 종료
+                # 스택이 비어있을 경우 Wrong 반환 종료
                 if stack.isEmpty():
                     return ("Wrong_")
                 # 스택이 비어있지 않을경우
                 else:
                     # 꺼내서 left 에 pop 하여 저장
                     left =stack.pop()
-                    # left 에 있는 것과 쌍이 다르면 False 반환 종료
+                    # left 에 있는 것과 쌍이 다르면 Wrong 반환 종료
                     if (ch == "}" and left != "{")|\
                         (ch == "]" and left != "[")|\
                         (ch ==")"and left != "("):
