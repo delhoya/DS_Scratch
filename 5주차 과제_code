@@ -1,9 +1,8 @@
-
 class Stack:
     # 비어있는 리스트 생성
     def __init__(self):
         self.top = []
-    # 비어있는 리스트의 len (크기) = 0
+    # 비어있는 리스트의 len (크기) 0이면 True 아니면 False 반환
     def isEmpty(self):
         return len(self.top) == 0
     # 리스트 len (크기) 반환
@@ -54,13 +53,16 @@ class Stack:
                 else:
                     # 꺼내서 left 에 pop 하여 저장
                     left =stack.pop()
-                    # left 에 있는 것과 쌍이 다르면 Wrong 반환 종료
+                    # left 에 있는 것과 비교, 쌍이 다르면 Wrong 반환 종료
                     if (ch == "}" and left != "{")|\
                         (ch == "]" and left != "[")|\
                         (ch ==")"and left != "("):
                         return ("Wrong_")
-        # 스택에 전부 pop 하여 비어있을 경우 OK 반환 종료
-        return ("OK_")
+        # 반복문 종료 후 Stack 검사 (비어있으면 OK 아니면 Wrong 반환) 종료
+        if stack.isEmpty():
+            return("OK_")
+        else:
+            return("Wrong_")
 
 if __name__ == '__main__':
     n = str(input())
