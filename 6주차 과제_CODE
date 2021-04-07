@@ -1,0 +1,116 @@
+
+class Stack:
+    # 비어있는 리스트 (Stack_list) 생성
+    def __init__(self):
+        self.stack_list = []
+
+    # 비어있는 리스트의 len (크기) 0 반환
+    def isEmpty(self):
+        return len(self.stack_list) == 0
+
+    # 리스트 len (크기) 반환
+    def size (self):
+        return len(self.stack_list)
+
+    # 리스트 초기화 []
+    def clear(self):
+        self.stack_list == []
+
+    # 리스트가 비어있지 않으면 리스트 마지막 인덱스 pop
+    # 리스트가 비어있으면 Stack Empty 출력
+    def pop(self):
+        if not self.isEmpty():
+            return self.stack_list.pop(-1)
+        else :
+            print("Stack Empty")
+
+    # append 함수를 이용하여 리스트에 추가
+    def push(self,item):
+        self.stack_list.append(item)
+
+    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 출력
+    def peek(self):
+        if not self.isEmpty():
+            return print(self.stack_list[-1])
+
+    def print(self):
+        if not self.isEmpty():
+            # Join 함수로 리스트를 문자열로 치환
+            # 리스트 역순 출력을 위해서 [::-1] 형태
+            return print("".join(self.stack_list[::-1]))
+
+    # Top 이 n-1 이동하는 uprotate 함수
+    def uprotate(self,n):
+        # Top 에서 n번째 인덱스
+        n = self.size() - n
+        # 리스트가 비어있거나 , n 이 데이터 개수보다 큰 경우 작업 X(if not)
+        if not self.isEmpty() & n > 0 :
+            # 리스트 내의 Top 을 head 객체에 저장
+            head = self.stack_list[-1]
+            # 리스트 내 가장 마지막값 삭제
+            del self.stack_list[-1]
+            # 리스트 첫 데이터 n 만큼 이동하여 사이에 삽입
+            self.stack_list.insert(n,head)
+
+    def downrotate(self,n):
+        # Top 에서 n번째 인덱스
+        n = self.size() - n
+        # 리스트가 비어있거나 , n 이 데이터 개수보다 큰 경우 작업 X (if not)
+        if not self.isEmpty()& n > 0 :
+            # n 번째 위치 데이터 temp 객체에 저장
+            temp = self.stack_list[n]
+            # n 번째 위치 리스트 삭제
+            del self.stack_list[n]
+            # top 위치에 temp 삽입(append)
+            self.stack_list.append(temp)
+
+    def duplicate(self):
+        # 리스트가 비어있지 않을경우
+        if not self.isEmpty():
+            # Top 의 데이터 객체 Temp 에 저장
+            temp = self.stack_list[-1]
+            # Top 을 Pop 시킴
+            self.pop()
+            # Temp 를 Push 2회
+            self.push(temp)
+            self.push(temp)
+
+if __name__ == '__main__':
+
+    stack = Stack()
+
+    # 연산 갯수 지정
+    print("원하시는 연산갯수를 입력하세요")
+    n = int(input())
+
+    for i in range(n):
+
+        print("원하시는 연산을 입력하세요")
+        string1 = str(input())
+
+        if string1 == "POP":
+            stack.pop()
+
+        elif string1 == "PUSH":
+            print("PUSH 할 데이터를 입력하세요")
+            string2 = str(input())
+            stack.push(string2)
+
+        elif string1 == "PRINT":
+            stack.print()
+
+        elif string1 == "UpR":
+            print("ROTATE 할 인덱스를 입력하세요")
+            num = int(input())
+            stack.uprotate(num)
+
+        elif string1 == "PEEK":
+            stack.peek()
+
+        elif string1 == "DownR":
+            print("ROTATE 할 인덱스를 입력하세요")
+            num = int(input())
+            stack.downrotate(num)
+
+        elif string1 == "DUP":
+            stack.duplicate()
