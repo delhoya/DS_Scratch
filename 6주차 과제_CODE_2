@@ -1,0 +1,88 @@
+
+class Que:
+
+    def __init__(self):
+        self.front = 0
+        self.rear = 0
+        # 큐 사이즈 만큼 정수값 0로 하는 리스트 생성
+        self.list = [0] * qsize
+
+    def isEmpty(self):
+        return self.front == self.rear
+
+    def isFull(self):
+        return self.front ==(self.rear+1)%qsize
+
+    def print(self):
+        # join 함수를 사용하여 묶어서 출력
+        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list).
+         print("□",end='')
+         print(" ".join(map(str,self.list)))
+
+    def enque(self,item):
+        if not self.isFull():
+            # 인덱스 증가 (모듈러 연산)
+            self.rear = (self.rear+1)%qsize
+            # list 값의 인덱스 지정
+            self.list[self.rear] = item
+        # 포화 상태일때 overflow 및 리스트 값 모두 출력
+        else :
+            print("overflow□", end="")
+            print(" ".join(map(str, self.list)))
+
+    def deque(self):
+        if not self.isEmpty():
+
+            self.front = (self.front+1)%qsize
+            self.list[self.front] = 0
+            return self.list[self.front]
+
+        # 공백 상태일때 underflow 출력
+        else :
+            print("underflow")
+
+    def peek(self):
+        if not self.isEmpty():
+            return self.list[(self.front + 1) % qsize]
+
+    def size(self):
+        return (self.rear - self.front + qsize) % qsize
+
+    def display(self):
+        out = []
+        if self.front < self.rear:
+            out = self.list[self.front + 1:self.rear + 1]
+        else:
+            out = self.list[self.front + 1:qsize] + self.list[0:self.rear + 1]
+
+        print("[f=%s,r=%d==>" %(self.front,self.rear),out)
+
+
+if __name__ == '__main__':
+
+    # 큐 사이즈 입력
+    print("원형 큐 사이즈를 입력하세요")
+    qsize = int(input())
+
+    # Que 클래스의 객체 q 생성
+    q = Que()
+
+    # 연산 횟수 입력
+    print("원하시는 연산 횟수를 입력하세요")
+    number = int(input())
+
+    for i in range(number):
+
+        print("원하시는 연산 종류를 입력하세요")
+        string1 = str(input())
+
+        if string1 == "D":
+            q.deque()
+
+        elif string1 == "I":
+            print("삽입할 데이터를 입력하세요")
+            number2 = int(input())
+            q.enque(number2)
+
+        elif string1 == "P":
+            q.print()
