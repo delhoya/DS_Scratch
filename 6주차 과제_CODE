@@ -1,4 +1,4 @@
-            
+
 class Stack:
     def __init__(self):
         # 비어있는 리스트 (Stack_list) 생성
@@ -79,31 +79,22 @@ class Stack:
 if __name__ == '__main__':
 
     stack = Stack()
-
     # 연산 갯수 지정
     print("원하시는 연산갯수를 입력하세요")
-
     for x in range(int(input())):
-
         n = input().split()
 
         if n[0] == "POP":
             stack.pop()
-
         elif n[0] == "PUSH":
             stack.push(n[1])
-
         elif n[0] == "PRINT":
             stack.print()
-
         elif n[0] == "UpR":
             stack.uprotate(int(n[1]))
-
         elif n[0] == "PEEK":
             stack.peek()
-
         elif n[0] == "DownR":
             stack.downrotate(int(n[1]))
-
         elif n[0] == "DUP":
             stack.duplicate()
