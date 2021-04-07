@@ -14,8 +14,8 @@ class Que:
         return self.front ==(self.rear+1)%qsize
 
     def print(self):
-        # join 함수를 사용하여 묶어서 출력
-        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list).
+        # join 함수를 사용하여 묶어서 출력 (str자료형 인자)
+        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list) 변환 
          print("□",end='')
          print(" ".join(map(str,self.list)))
 
