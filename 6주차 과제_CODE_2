@@ -54,7 +54,6 @@ class Que:
             out = self.list[self.front + 1:self.rear + 1]
         else:
             out = self.list[self.front + 1:qsize] + self.list[0:self.rear + 1]
-
         print("[f=%s,r=%d==>" %(self.front,self.rear),out)
 
 
