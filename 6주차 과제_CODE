@@ -45,12 +45,12 @@ class Stack:
         n = self.size() - n
         # 리스트가 비어있거나 , n 이 데이터 개수보다 큰 경우 작업 X(if not)
         if not self.isEmpty() & n > 0 :
-            # 리스트 내의 Top 을 head 객체에 저장
-            head = self.stack_list[-1]
+            # 리스트 내의 Top 을 temp 객체에 저장
+            temp = self.stack_list[-1]
             # 리스트 내의 Top 삭제
             del self.stack_list[-1]
             # 리스트 n 만큼 이동하여 사이에 Top 삽입
-            self.stack_list.insert(n,head)
+            self.stack_list.insert(n,temp)
 
     # n이 top 으로 이동하는 downrotate 함수
     def downrotate(self,n):
