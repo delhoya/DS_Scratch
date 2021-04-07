@@ -7,6 +7,8 @@ https://stackoverflow.com/questions/33004034/how-to-implement-insert-method-in-a
 https://velog.io/@johnque/Python-Double-LinkedList
 
 
+이중연결리스트 
+
 9 ↦ 연산의 개수: 9
 A 1 D ↦ add(list, 1, 'D')
 A 2 a ↦ add(list, 2, 'a')
