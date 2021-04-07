@@ -1,36 +1,36 @@
 
 class Stack:
-    # 비어있는 리스트 (Stack_list) 생성
     def __init__(self):
+        # 비어있는 리스트 (Stack_list) 생성
         self.stack_list = []
 
-    # 비어있는 리스트의 len (크기) 0 반환
     def isEmpty(self):
+        # 비어있는 리스트의 len (크기) 0 반환
         return len(self.stack_list) == 0
 
-    # 리스트 len (크기) 반환
     def size (self):
+        # 리스트 len (크기) 반환
         return len(self.stack_list)
 
-    # 리스트 초기화 []
     def clear(self):
+        # 리스트 초기화 []
         self.stack_list == []
 
-    # 리스트가 비어있지 않으면 리스트 마지막 인덱스 pop
-    # 리스트가 비어있으면 Stack Empty 출력
     def pop(self):
+        # 리스트가 비어있지 않으면 리스트 마지막 인덱스 pop
+        # 리스트가 비어있으면 Stack Empty 출력
         if not self.isEmpty():
             return self.stack_list.pop(-1)
         else :
             print("Stack Empty")
 
-    # append 함수를 이용하여 리스트에 추가
     def push(self,item):
+        # append 함수를 이용하여 리스트에 추가
         self.stack_list.append(item)
 
-    # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 출력
     def peek(self):
         if not self.isEmpty():
+            # 리스트가 비어있지 않으면 마지막 (-1) 인덱스 출력
             return print(self.stack_list[-1])
 
     def print(self):
@@ -52,6 +52,7 @@ class Stack:
             # 리스트 첫 데이터 n 만큼 이동하여 사이에 삽입
             self.stack_list.insert(n,head)
 
+    # n이 top 으로 이동하는 downrotate 함수
     def downrotate(self,n):
         # Top 에서 n번째 인덱스
         n = self.size() - n
