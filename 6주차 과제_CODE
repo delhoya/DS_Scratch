@@ -85,7 +85,6 @@ if __name__ == '__main__':
 
     for x in range(int(input())):
 
-        print("원하시는 연산을 입력하세요")
         n = input().split()
 
         if n[0] == "POP":
