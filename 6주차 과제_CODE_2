@@ -15,7 +15,7 @@ class Que:
 
     def print(self):
         # join 함수를 사용하여 묶어서 출력 (str자료형 인자)
-        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list) 변환 
+        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list) 변환
          print("□",end='')
          print(" ".join(map(str,self.list)))
 
@@ -66,22 +66,15 @@ if __name__ == '__main__':
     # Que 클래스의 객체 q 생성
     q = Que()
 
-    # 연산 횟수 입력
-    print("원하시는 연산 횟수를 입력하세요")
-    number = int(input())
+    print("원하시는 연산갯수를 입력하세요")
+    for x in range(int(input())):
+        n = input().split()
 
-    for i in range(number):
-
-        print("원하시는 연산 종류를 입력하세요")
-        string1 = str(input())
-
-        if string1 == "D":
+        if n[0] ==  "D":
             q.deque()
 
-        elif string1 == "I":
-            print("삽입할 데이터를 입력하세요")
-            number2 = int(input())
-            q.enque(number2)
+        elif n[0] == "I":
+            q.enque(int(n[1]))
 
-        elif string1 == "P":
+        elif n[0] == "P":
             q.print()
