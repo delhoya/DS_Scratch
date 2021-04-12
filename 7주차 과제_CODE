@@ -1,17 +1,16 @@
-
-
 class Node:
-    def __init__(self,item,prev=None,next=None):
+    def __init__(self, item, prev=None, next=None):
         self.item = item
         self.prev = prev
         self.next = next
+
 
 class CircleDeque:
 
     def __init__(self):
         # self.front, self.rear 더미 노드 생성
-        self.front = Node(None,None,None)
-        self.rear = Node(None,None,None)
+        self.front = Node(None, None, None)
+        self.rear = Node(None, None, None)
         # self.front와 self.rear 연결
         self.front.next = self.rear
         self.rear.prev = self.front
@@ -21,13 +20,13 @@ class CircleDeque:
     def isEmpty(self):
         return self.size == 0
 
-    def add_front(self,item):
+    def add_front(self, item):
 
         if self.isEmpty():
 
-            temp = Node(item,None,None)
+            temp = Node(item, None, None)
 
-            #temp의 위치를 self.front와 연결
+            # temp의 위치를 self.front와 연결
             temp.prev = self.front
             self.front.next = temp
 
@@ -39,7 +38,7 @@ class CircleDeque:
             self.size += 1
 
         else:
-            temp = Node(item,None,None)
+            temp = Node(item, None, None)
 
             # temp의 위치를 self.front.next 에 삽입
             temp.next = self.front.next
@@ -49,21 +48,20 @@ class CircleDeque:
             temp.prev = self.front
             self.front.next = temp
 
-            #사이즈 1 증가
-            self.size +=1
+            # 사이즈 1 증가
+            self.size += 1
 
-
-    def add_rear(self,item):
+    def add_rear(self, item):
 
         if self.isEmpty():
-            temp = Node(item,None,None)
+            temp = Node(item, None, None)
 
             # self.rear 와 temp 연결
 
             temp.next = self.rear
             self.rear.prev = temp
 
-            #self.front 와 temp 연결
+            # self.front 와 temp 연결
 
             temp.prev = self.front
             self.front.next = temp
@@ -72,9 +70,9 @@ class CircleDeque:
             self.size += 1
 
         else:
-            temp = Node(item,None,None)
+            temp = Node(item, None, None)
 
-            #self.rear.prev 와 temp 연결
+            # self.rear.prev 와 temp 연결
             self.rear.prev.next = temp
             temp.prev = self.rear.prev
 
@@ -87,14 +85,15 @@ class CircleDeque:
 
     def delete_front(self):
 
-        if self.size == 1 :
+        if self.size == 1:
             # 초기화 진행
             self.front.next = self.rear
             self.rear.prev = self.front
             self.size = 0
 
-        elif self.size == 0 :
+        elif self.size == 0:
             print('underflow')
+            exit()
 
         else:
             # self.front.next 를 삭제 (포인터 건너뛰기 연결 )
@@ -105,14 +104,15 @@ class CircleDeque:
 
     def delete_rear(self):
 
-        if self.size == 1 :
+        if self.size == 1:
             # 초기화 진행
             self.front.next = self.rear
             self.rear.prev = self.front
             self.size = 0
 
-        elif self.size == 0 :
+        elif self.size == 0:
             print('underflow')
+            exit()
 
         else:
             # self.rear.prev 를 삭제 (포인터 건너뛰기 연결)
@@ -121,56 +121,42 @@ class CircleDeque:
             self.rear.prev = self.rear.prev.prev
             self.size -= 1
 
-
     def print(self):
-
         # 출력을 위한 비어있는 list 생성
         list = []
         if self.isEmpty():
-            
             print('underflow')
-            
+            exit()
+
         else:
-            
+
             temp = self.front
-            
             # front.next = self.rear (초기화 상태) 가 될때 까지
-            
             while temp.next != self.rear:
                 # 리스트에 Node 의 item을 append
                 list.append(temp.next.item)
                 temp = temp.next
-            
-            print("□",end='')
+            print("□", end='')
             # list 출력
             # map 을 이용하여 list 를 string 타입 캐스팅 map(적용함수,적용대상)
-            # .join 을 이용하여 list 의 출력 형식 지정 "".join 
-            print(" ".join(map(str,list)))
+            # .join 을 이용하여 list 의 출력 형식 지정 "".join
+            print(" ".join(map(str, list)))
 
 
 if __name__ == '__main__':
-
     cq = CircleDeque()
-
     print("연산의 개수를 입력하세요")
-
     # 입력된 연산의 개수 만큼 반복
     for x in range(int(input())):
-
         # 입력받은 값을 split() 함수 이용(공백)
         n = input().split()
-
-        if n[0] ==  "AF":
+        if n[0] == "AF":
             cq.add_front(n[1])
-
         elif n[0] == "AR":
             cq.add_rear(n[1])
-
         elif n[0] == "DF":
             cq.delete_front()
-
         elif n[0] == "DR":
             cq.delete_rear()
-
         elif n[0] == "P":
             cq.print()
