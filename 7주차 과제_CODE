@@ -152,9 +152,9 @@ if __name__ == '__main__':
 
     cq = CircleDeque()
 
-    print("연산의개수를 입력하세요")
+    print("연산의 개수를 입력하세요")
 
-    # 입력된 연산 만큼 반복
+    # 입력된 연산의 개수 만큼 반복
     for x in range(int(input())):
 
         # 입력받은 값을 split() 함수 이용(공백)
