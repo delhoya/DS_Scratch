@@ -125,9 +125,8 @@ class CircleDeque:
         # 출력을 위한 비어있는 list 생성
         list = []
         if self.isEmpty():
-            print('underflow')
-            exit()
-
+            print('Empty')
+            
         else:
 
             temp = self.front
