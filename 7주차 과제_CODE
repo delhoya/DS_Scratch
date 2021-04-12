@@ -127,14 +127,20 @@ class CircleDeque:
         # 출력을 위한 비어있는 list 생성
         list = []
         if self.isEmpty():
+            
             print('underflow')
+            
         else:
+            
             temp = self.front
+            
             # front.next = self.rear (초기화 상태) 가 될때 까지
+            
             while temp.next != self.rear:
                 # 리스트에 Node 의 item을 append
                 list.append(temp.next.item)
                 temp = temp.next
+            
             print("□",end='')
             # list 출력
             # map 을 이용하여 list 를 string 타입 캐스팅
