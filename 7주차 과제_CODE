@@ -143,8 +143,8 @@ class CircleDeque:
             
             print("□",end='')
             # list 출력
-            # map 을 이용하여 list 를 string 타입 캐스팅
-            # .join 을 이용하여 list 의 출력 형식 지정
+            # map 을 이용하여 list 를 string 타입 캐스팅 map(적용함수,적용대상)
+            # .join 을 이용하여 list 의 출력 형식 지정 "".join 
             print(" ".join(map(str,list)))
 
 
