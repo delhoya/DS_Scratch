@@ -1,3 +1,6 @@
+
+# full binary tree search 이용 ( =! complete binary tree search)
+
 package Search;
 
 public class BinarySearch {
