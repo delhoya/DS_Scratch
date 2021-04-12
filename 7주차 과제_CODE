@@ -1,125 +1,148 @@
 
-class Que:
+
+class Node:
+    def __init__(self,item,prev=None,next=None):
+        self.item = item
+        self.prev = prev
+        self.next = next
+
+class CircleDeque:
 
     def __init__(self):
-        self.front = 0
-        self.rear = 0
-        # 큐 사이즈 만큼 정수값 0로 하는 리스트 생성
-        self.list = [0] * qsize
+        self.front = Node(None,None,None)
+        self.rear = Node(None,None,None)
+        self.front.next = self.rear
+        self.rear.prev = self.front
+        self.size = 0
 
     def isEmpty(self):
-        return self.front == self.rear
+        return self.size == 0
 
-    def isFull(self):
-        return self.front ==(self.rear+1)%qsize
+    def add_front(self,item):
+
+        if self.isEmpty():
+
+            temp = Node(item,None,None)
+
+            #temp의 위치를 self.front와 연결
+            self.front.next = temp
+            temp.prev = self.front
+
+            # temp의 위치를 self.rear 와 연결
+            temp.next = self.rear
+            self.rear.prev = temp
+
+            # 사이즈 1 증가
+            self.size += 1
+
+        else:
+            temp = Node(item,None,None)
+
+            # temp의 위치를 self.front.next 에 삽입
+            temp.next = self.front.next
+            self.front.next.prev = temp
+
+            # temp를 self.front 와 연결
+            self.front.next = temp
+            temp.prev = self.front
+
+            #사이즈 1 증가
+            self.size +=1
+
+
+    def add_rear(self,item):
+
+        if self.isEmpty():
+            temp = Node(item,None,None)
+
+            # self.rear 와 temp 연결
+
+            self.rear.prev = temp
+            temp.next = self.rear
+            #self.front 와 temp 연결
+
+            self.front.next = temp
+            temp.prev = self.front
+            # 사이즈 1 증가
+
+            self.size += 1
+
+        else:
+            temp = Node(item,None,None)
+
+            #self.rear.prev 와 temp 연결
+            self.rear.prev.next = temp
+            temp.prev = self.rear.prev
+
+            # temp 와 self.rear 연결
+            temp.next = self.rear
+            self.rear.prev = temp
+
+            # 사이즈1 증가
+            self.size += 1
+
+    def delete_front(self):
+
+        if self.size == 1 :
+            # 초기화 진행
+            self.front.next = self.rear
+            self.rear.prev = self.front
+            self.size = 0
+        else:
+            # self.front.next 를 삭제 (next 포인터 건너뛰기 연결 )
+            # self.front와 먼저 연결
+            self.front.next.next.prev = self.front
+            self.front.next = self.front.next.next
+            self.size -= 1
+
+    def delete_rear(self):
+
+        if self.size == 1 :
+            # 초기화 진행
+            self.front.next = self.rear
+            self.rear.prev = self.front
+            self.size = 0
+        else:
+            # self.rear.prev 를 삭제 (prev 포인터 건너뛰기 연결)
+            # self.rear와 먼저 연결
+            self.rear.prev.prev.next = self.rear
+            self.rear.prev = self.rear.prev.prev
+            self.size -= 1
+
 
     def print(self):
-        # join 함수를 사용하여 묶어서 출력 (str자료형 인자)
-        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list) 변환
-         print("□",end='')
-         print(" ".join(map(str,self.list)))
 
-    def enque(self,item):
-        if not self.isFull():
-            # 인덱스 증가 (모듈러 연산)
-            self.rear = (self.rear+1)%qsize
-            # list 값의 인덱스 지정
-            self.list[self.rear] = item
-        # 포화 상태일때 overflow 및 리스트 값 모두 출력
-        else :
-            print("overflow□", end="")
-            print(" ".join(map(str, self.list)))
-
-    def deque(self):
-        if not self.isEmpty():
-
-            self.front = (self.front+1)%qsize
-            self.list[self.front] = 0
-            return self.list[self.front]
-
-        # 공백 상태일때 underflow 출력
-        else :
-            print("underflow")
-
-    def peek(self):
-        if not self.isEmpty():
-            return self.list[(self.front + 1) % qsize]
-
-    def size(self):
-        return (self.rear - self.front + qsize) % qsize
-
-    def display(self):
-        out = []
-        if self.front < self.rear:
-            out = self.list[self.front + 1:self.rear + 1]
+        list = []
+        if self.isEmpty():
+            print('underflow')
         else:
-            out = self.list[self.front + 1:qsize] + self.list[0:self.rear + 1]
-        print("[f=%s,r=%d==>" %(self.front,self.rear),out)
-
-
-class CircularDeque(Que):
-
-    def __init__(self):
-        super().__init__()
-
-    def addRear(self,item):
-        self.enque(item)
-
-    def deleteFront(self):
-        return self.deque()
-
-    def getFront(self):
-        return self.peek()
-
-    def addFront(self,item):
-            if not self.isFull():
-                self.item[self.front] = item
-                self.front = self.front -1
-                if self.front < 0 : self.front = qsize-1
-
-    def deleteRear(self):
-        if not self.isEmpty():
-            item = self.item[self.rear]
-            self.rear = self.rear - 1
-            if self.rear < 0 :
-                self.rear = qsize - 1
-            return item
-
-    def getRear(self):
-        return self.items[self.rear]
+            temp = self.front
+            list.append("□")
+            while temp.next != self.rear:
+                list.append(temp.next.item)
+                temp = temp.next
+            print(list)
 
 
 if __name__ == '__main__':
 
-    # 큐 사이즈 입력
-    print("원형 큐 사이즈를 입력하세요")
-    qsize = int(input())
+    cq = CircleDeque()
 
-    # Que 클래스의 객체 q 생성
-    dq = CircularDeque()
+    cq.add_front(30)
+    cq.print()
+    cq.add_front(20)
+    cq.print()
+    cq.add_rear(10)
+    cq.print()
+    cq.add_rear(5)
+    cq.print()
+    cq.delete_rear()
+    cq.print()
+    cq.delete_rear()
+    cq.print()
+    cq.delete_rear()
+    cq.print()
+    cq.delete_rear()
+    cq.print()
 
-    # 연산 횟수 입력
-    print("원하시는 연산 횟수를 입력하세요")
-    number = int(input())
 
-    for i in range(number):
-
-        print("원하시는 연산 종류를 입력하세요")
-        string1 = str(input())
-
-        if string1 == "DF":
-            dq.deleteFront()
-
-        if string1 == "DR":
-            dq.deleteRear()
-
-        elif string1 == "AF":
-            number2 = int(input())
-            dq.addFront(number2)
-
-        elif string1 == "AR":
-            number2 = int(input())
-            dq.addRear(number2)
-
-        elif string1 == "P":
-            dq.display()
