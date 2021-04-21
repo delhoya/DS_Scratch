@@ -1,0 +1,28 @@
+
+class Bheap:
+    def __init__(self,a):
+        self.a = a
+        self.n = len(a)-1
+
+    def create_heap(self):
+        for i in range(self.n//2 , 0 , -1):
+            self.downheap(i)
+
+    def insert(self,key_value):
+        self.n +=1
+        self.a.append(key_value)
+        self.upheap(self.n)
+
+    def delete_min(self):
+        if self.n == 0 :
+            print('empty')
+            return None
+        min = self.a[1]
+        self.a[1], self.a[-1] = self.a[-1],self.a[1]
+        del self.a[-1]
+        self.N -=1
+        self.downheap(1)
+        return min
+
+    def downheap(self,i):
+        pass
