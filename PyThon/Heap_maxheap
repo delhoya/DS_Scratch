@@ -1,0 +1,75 @@
+
+class maxheap:
+
+    def __init__(self):
+        self.heap =[]
+        self.heap.append(0)
+
+    def size(self):
+        return len(self.heap) -1
+
+    def isEmpty(self):
+        return self.size == 0
+
+    def parent(self,i):
+        return self.heap[i//2]
+
+    def left(self,i):
+        return self.heap[i*2]
+
+    def right(self,i):
+        return self.heap[i*2+1]
+
+    def display(self,msg ="heap tree"):
+        print(msg,self.heap[1:])
+
+
+    def insert(self,n):
+        self.heap.append(n)
+        # n 의 위치를 저장할 객체 i
+        i = self.size()
+        # n의 위치가 1이 아니고 n의 값이 부모의 값보다 크다면 (내려줘야함)
+        while(i != 1 and n > self.parent(i)):
+            #i 위치에 부모 값 삽입
+            self.heap[i] = self.parent(i)
+            #부모위치 설정
+            i = i//2
+        # 부모위치에 n 삽입
+        self.heap[i] = n
+
+
+    def delete(self):
+        parent = 1
+        child = 2
+        if not self.isEmpty():
+            hroot = self.heap[1]
+            last = self.heap[self.size()]
+            while (child <= self.size()):
+                if child < self.size() and self.left(parent)<self.right(parent):
+                    child += 1
+                if last >= self.heap[child]:
+                    break;
+                self.heap[parent] = self.heap[child]
+                parent = child
+                child *= 2;
+
+            self.heap[parent] = last
+            self.heap.pop (-1)
+            return hroot
+
+if __name__ == '__main__':
+
+    heap = maxheap()
+
+    data = [2,5,3,5,1,7,8,9]
+
+    print("삽입연산"+str(data))
+
+    for elem in data :
+        heap.insert(elem)
+
+    heap.display("[삽입후]")
+    heap.delete()
+    heap.display("[삭제후]")
+    heap.display()
+    heap.display("[삭제후]")
