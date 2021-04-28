@@ -1,80 +1,72 @@
+class Bheap:
+    def __init__(self, a):
+        self.list = a
+        self.size = len(a) - 1
 
-class Que:
+    def create_heap(self):
+        for i in range(self.size//2, 0, -1):
+            self.downheap(i)
 
-    def __init__(self):
-        self.front = 0
-        self.rear = 0
-        # 큐 사이즈 만큼 정수값 0로 하는 리스트 생성
-        self.list = [0] * qsize
+    def insert(self, key):
+        self.size += 1
+        self.list.append(key)
+        self.upheap(self.size)
 
-    def isEmpty(self):
-        return self.front == self.rear
+    def delete_min(self):
+        if self.size == 0:
+            print('empty')
+            return None
+        min = self.list[1]
+        self.list[1], self.list[-1] = self.list[-1], self.list[1]
+        del self.list[-1]
+        self.size -= 1
+        self.downheap(1)
+        return min
 
-    def isFull(self):
-        return self.front ==(self.rear+1)%qsize
+    def downheap(self, i):
+        while 2 * i <= self.size:
+            k = 2 * i
+            if k < self.size and self.list[k] < self.list[k + 1]:
+                k += 1
+            if self.list[i] > self.list[k]:
+                break
+            self.list[i], self.list[k] = self.list[k], self.list[i]
+            i = k
 
-    def print(self):
-        # join 함수를 사용하여 묶어서 출력 (str자료형 인자)
-        # 원형 큐 자료형이 int이기 때문에 map을 통해 해결 map(str,list) 변환
-         print("□",end='')
-         print(" ".join(map(str,self.list)))
+    def upheap(self, j):
+        while j > 1 and self.list[j // 2] < self.list[j]:
+            self.list[j], self.list[j // 2] = self.list[j // 2], self.list[j]
+            j = j // 2
 
-    def enque(self,item):
-        if not self.isFull():
-            # 인덱스 증가 (모듈러 연산)
-            self.rear = (self.rear+1)%qsize
-            # list 값의 인덱스 지정
-            self.list[self.rear] = item
-        # 포화 상태일때 overflow 및 리스트 값 모두 출력
-        else :
-            print("overflow□", end="")
-            print(" ".join(map(str, self.list)))
-
-    def deque(self):
-        if not self.isEmpty():
-
-            self.front = (self.front+1)%qsize
-            self.list[self.front] = 0
-            return self.list[self.front]
-
-        # 공백 상태일때 underflow 출력
-        else :
-            print("underflow")
-
-    def peek(self):
-        if not self.isEmpty():
-            return self.list[(self.front + 1) % qsize]
-
-    def size(self):
-        return (self.rear - self.front + qsize) % qsize
-
-    def display(self):
-        out = []
-        if self.front < self.rear:
-            out = self.list[self.front + 1:self.rear + 1]
-        else:
-            out = self.list[self.front + 1:qsize] + self.list[0:self.rear + 1]
-        print("[f=%s,r=%d==>" %(self.front,self.rear),out)
-
+    def print_heap(self):
+        print("□", end='')
+        print(" ".join(map(str, a[1:])))
 
 if __name__ == '__main__':
 
-    # 큐 사이즈 입력
-    print("원형 큐 사이즈를 입력하세요")
-    qsize = int(input())
+    a = [None]
 
-    # Que 클래스의 객체 q 생성
-    q = Que()
+    n = input().split()
 
-    print("원하시는 연산갯수를 입력하세요")
-    for x in range(int(input())):
-        n = input().split()
+    n1 = n[0]
+    n2 = n[1]
+    n3 = n[2]
+    n4 = n[3]
+    n5 = n[4]
+    n6 = n[5]
+    n7 = n[6]
+    n8 = n[7]
 
-        if n[0] ==  "D":
-            q.deque()
+    a.append(int(n1))
+    a.append(int(n2))
+    a.append(int(n3))
+    a.append(int(n4))
+    a.append(int(n5))
+    a.append(int(n6))
+    a.append(int(n7))
+    a.append(int(n8))
 
-        elif n[0] == "I":
-            q.enque(int(n[1]))
 
-        elif n[0] == "P":
-            q.print()
+    b = Bheap(a)
+    b.create_heap()
+    b.print_heap()
