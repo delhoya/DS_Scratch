@@ -4,8 +4,10 @@
 class Bheap:
     def __init__(self):
         self.a = []
-        self.size = len(self.a)
+        self.size = 0
 
+    def size(self):
+        return self.size
 
     # 아래 -> 위 올라가면서 힙 속성 회복
     def upheap(self,j):
@@ -81,4 +83,3 @@ if __name__ == '__main__':
     heap.insert(n2[1])
 
     heap.display()
-
