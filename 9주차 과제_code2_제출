@@ -1,0 +1,65 @@
+class Bheap:
+    def __init__(self, a):
+        self.list = a
+        self.size = len(a) - 1
+
+    def create_heap(self):
+        for i in range(self.size//2, 0, -1):
+            self.downheap(i)
+
+    def insert(self, key):
+        self.size += 1
+        self.list.append(key)
+        self.upheap(self.size)
+
+    def delete_min(self):
+        if self.size == 0:
+            print('empty')
+            return None
+        min = self.list[1]
+        self.list[1], self.list[-1] = self.list[-1], self.list[1]
+        del self.list[-1]
+        self.size -= 1
+        self.downheap(1)
+        return min
+
+    def downheap(self, i):
+        while 2 * i <= self.size:
+            k = 2 * i
+            if k < self.size and self.list[k] < self.list[k + 1]:
+                k += 1
+            if self.list[i] > self.list[k]:
+                break
+            self.list[i], self.list[k] = self.list[k], self.list[i]
+            i = k
+
+    def upheap(self, j):
+        while j > 1 and self.list[j // 2] < self.list[j]:
+            self.list[j], self.list[j // 2] = self.list[j // 2], self.list[j]
+            j = j // 2
+
+    def print_heap(self):
+        print("□", end='')
+        print(" ".join(map(str, a[1:])))
+
+if __name__ == '__main__':
+
+    a = [None]
+
+    n = input().split()
+
+    n1 = n[0]
+    n2 = n[1]
+    n3 = n[2]
+
+    print(n1)
+    print(n2)
+    print(n3)
+
+    a.append(int(n1))
+    a.append(int(n2))
+    a.append(int(n3))
+
+    b = Bheap(a)
+    b.create_heap()
+    b.print_heap()
