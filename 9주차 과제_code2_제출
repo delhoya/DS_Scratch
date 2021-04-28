@@ -46,19 +46,12 @@ if __name__ == '__main__':
 
     a = [None]
 
+    number = int(input())
+
     n = input().split()
 
-    n1 = n[0]
-    n2 = n[1]
-    n3 = n[2]
-
-    print(n1)
-    print(n2)
-    print(n3)
-
-    a.append(int(n1))
-    a.append(int(n2))
-    a.append(int(n3))
+    for x in range(number):
+        a.append(int(n[x]))
 
     b = Bheap(a)
     b.create_heap()
