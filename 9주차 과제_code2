@@ -39,21 +39,17 @@ class Bheap:
             j = j // 2
 
     def print_heap(self):
-        print(a)
+        print(a[1:])
         print("힙크기:", self.size)
 
 
 if __name__ == '__main__':
-    a = [None] * 1
-    a.append([90])
-    a.append([80])
+    a = [None]
     a.append([70])
-    a.append([50])
-    a.append([60])
-    a.append([20])
-    a.append([30])
     a.append([10])
-    a.append([40])
+    a.append([80])
+    a.append([8])
+    a.append([9])
     b = Bheap(a)
     print("힙 만들기전")
     b.print_heap()
