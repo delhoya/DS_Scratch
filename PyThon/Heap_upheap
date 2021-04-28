@@ -1,0 +1,88 @@
+#Bottom up Heap 상향식 힙 만들기
+
+class Bheap:
+    def __init__(self,a):
+        self.a = a
+        self.n = len(a)-1
+
+    def create_heap(self):
+        # n 삽입 , n/2 부모노드 , n//2 + 1 ~ n 까지는 자식노드 / 다운힙 수행 X
+        for i in range(self.n//2 , 0 , -1):
+            self.downheap(i)
+
+    # 위-> 아래 내려가며 힙 속성 회복
+    def downheap(self,i):
+        # 부모 (2i) 가 자식(i) 보다 크거나 같으면 반복 : 부모가 작을때까지 반복
+        while 2*i <= self.n:
+            # 자식 저장
+            k = 2*i
+            # 자식 k 가 n 보다 작을때
+            # 인덱스 k 왼쪽자식 , 인덱스 k+1 오른쪽 자식 방향 선택
+            if k < self.n and self.a[k][0] > self.a[k+1][0]:
+                k += 1
+            # 힙속성 만족 시 break 자식값이 더 클때
+            if self.a[i][0] < self.a[k][0]:
+                break
+            # 자식 , 현재노드 교환 진행
+            self.a[i], self.a[k] = self.a[k], self.a[i]
+            i = k
+
+    # 아래 -> 위 올라가면서 힙 속성 회복
+    def upheap(self,j):
+        # 자식 (j//2)가 부모(j)보다 크면 반복 : 자식이 작을때까지 반복
+        while j > 1 and self.a[j//2][0] > self.a[j][0]:
+            # 부모 자식 교환
+            self.a[j], self.a[j//2] = self.a[j//2] ,self.a[j]
+            # 현재 노드가 부모노드로
+            j = j//2
+
+
+    def insert(self,key_value):
+        self.n +=1
+        self.a.append(key_value)
+        # 상향식으로 힙속성 회복
+        self.upheap(self.n)
+
+    def delete_min(self):
+        if self.n == 0 :
+            print('empty')
+            return None
+        # 최소값 보관
+        min = self.a[1]
+        self.a[1], self.a[-1] = self.a[-1],self.a[1]
+        del self.a[-1]
+        self.N -=1
+        # 힙속성 회복
+        self.downheap(1)
+        # 최소값 반환
+        return min
+
+    def print_heap(self):
+        for i in range(1,self.n+1):
+            print("[%2d"%self.a[i][0],self.a[i][1],"]",end='')
+        print("힙크기:" ,self.n)
+
+
+if __name__ == '__main__':
+    a = [None]*1
+    a.append([90, "A"])
+    a.append([80, "P"])
+    a.append([70, "M"])
+    a.append([50, "L"])
+    a.append([60, "G"])
+    a.append([20, "C"])
+    a.append([30, "O"])
+    a.append([10, "a"])
+    a.append([40, "K"])
+    b = Bheap(a)
+    print("힙 만들기전")
+    b.print_heap()
+    b.create_heap()
+    print("최소힙")
+    b.print_heap()
+    print("최소값삭제")
+    print(b.delete_min())
+    b.print_heap()
+    b.insert([5,"pp"])
+    print("5삽입후")
+    b.print_heap()
