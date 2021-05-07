@@ -1,0 +1,51 @@
+
+class hashLinear:
+    def __init__(self,size):
+        self.size = size
+        self.key_table = [None] * size
+        self.data_table = [None] * size
+
+    def hash (self,key):
+        return key % self.size
+
+    def put (self,key,data):
+        init = self.hash(key)
+        temp = init
+        count = 0
+
+        while True:
+
+            if self.key_table[temp] == None:
+                self.key_table[temp] = key
+                self.data_table[temp] = data
+                return
+            if self.key_table[temp] == key:
+                self.d[temp] = data
+
+            count +=1
+            temp = (init + count) % self.size
+
+            if temp == init :
+                break
+
+    def get (self,key):
+        init = self.hash(key)
+        temp = init
+        count =  1
+
+        while self.key_table[temp] != None:
+            return self.data_table[temp]
+
+        temp = (init + count) % self.size
+        count += 1
+        if temp == init :
+            return None
+        return None
+
+    def print_table(self):
+        for i in range (self.size):
+            print('{:4}'.format(str(i)),'',end ='')
+        print()
+        for i in range(self.size):
+            print('{:4}'.format(str(self.key_table[i])),'',end ='')
+        print()
