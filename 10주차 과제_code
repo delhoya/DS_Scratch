@@ -1,0 +1,56 @@
+class hashChaining:
+    class Node:
+        def __init__(self, key, next):
+            self.key = key
+            self.next = next
+
+    def __init__(self, size):
+        self.size = size
+        self.key_table = [None] * size
+
+    def hash(self, key):
+        return key % self.size
+
+    def put(self, key):
+        init = self.hash(key)
+        temp = self.key_table[init]
+        while temp != None:
+            if key == temp.key:  # 키가 이미 잇으면
+                temp.data = data  # 데이터만 갱신
+                return
+            temp = temp.next
+        # 새 노드 생성 후 단순연결리스트 맨앞에 삽입
+        # 체인처럼 동일 키에 이어지게 설정
+        self.key_table[init] = self.Node(key,self.key_table[init])
+
+    def get(self, key):
+        init = self.hash(key)
+        temp = self.key_table[init]
+        while temp != None:
+            if key == temp.key:
+                return temp.data
+            temp = temp.next
+        return None
+
+    def print_table(self):
+        for i in range(self.size):
+            print('%2d' % (i), end='')
+            temp = self.key_table[i]
+            while temp != None:
+                print(' ',temp.key, end='')
+                temp = temp.next
+            print()
+
+if __name__ == '__main__':
+
+    # 해시테이블 크기(size) 입력
+    t = hashChaining(int(input()))
+    t.put(25)
+    t.put(37)
+    t.put(18)
+    t.put(55)
+    t.put(22)
+    t.put(35)
+    t.put(50)
+    t.put(63)
+    t.print_table()
