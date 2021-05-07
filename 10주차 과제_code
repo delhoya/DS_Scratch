@@ -7,28 +7,30 @@ class hashChaining:
     def __init__(self, size):
         self.size = size
         self.key_table = [None] * size
+        self.key_index = 0
 
     def hash(self, key):
         return key % self.size
-
+    
     def put(self, key):
-        init = self.hash(key)
-        temp = self.key_table[init]
+        init_hash = self.hash(key)
+        temp = self.key_table[init_hash]
         while temp != None:
-            if key == temp.key:  # 키가 이미 잇으면
-                temp.data = data  # 데이터만 갱신
-                return
             temp = temp.next
         # 새 노드 생성 후 단순연결리스트 맨앞에 삽입
         # 체인처럼 동일 키에 이어지게 설정
-        self.key_table[init] = self.Node(key,self.key_table[init])
+        self.key_table[init_hash] = self.Node(key,self.key_table[init_hash])
+        return None
+
+    def delete(self,key):
+        pass
 
     def get(self, key):
-        init = self.hash(key)
-        temp = self.key_table[init]
+        init_hash = self.hash(key)
+        temp = self.key_table[init_hash]
         while temp != None:
             if key == temp.key:
-                return temp.data
+                return temp.key
             temp = temp.next
         return None
 
@@ -40,6 +42,14 @@ class hashChaining:
                 print(' ',temp.key, end='')
                 temp = temp.next
             print()
+
+    def print_hash(self):
+        for i in range(self.size):
+            temp = self.key_table[i]
+            while temp != None:
+                print(temp.key,' ', end='')
+                temp = temp.next
+
 
 if __name__ == '__main__':
 
@@ -54,3 +64,4 @@ if __name__ == '__main__':
     t.put(50)
     t.put(63)
     t.print_table()
+    t.print_hash()
