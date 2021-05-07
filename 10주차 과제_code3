@@ -1,0 +1,53 @@
+
+class hashDouble:
+    def __init__(self,size):
+        self.size = size
+        self.key_table = [None]*size
+        self.data_table = [None]*size
+        self.count = 0
+
+    def hash (self,key):
+        return key % self.size
+
+    def put(self,key,data):
+        init = self.hash(key)
+        temp = init
+        double_key = 7 - (key %7)
+        hash_count = 0
+        while True:
+            if self.key_table[temp] == None:
+                self.key_table[temp] = key
+                self.data_table[temp] = data
+                self.count +=1
+                return
+            if self.key_table[temp] == key:
+                self.data_table[temp] = data
+                return
+            hash_count +=1
+            temp = (init+hash_count*double_key)%self.size
+            if self.count > self.size:
+                break
+
+    def get(self,key):
+        init = self.hash(key)
+        temp = init
+        double_key = 7 - (key%7)
+        hash_count = 0
+        while self.key_table[temp] !=None:
+            if self.key_table[temp] == key :
+                return self.data_table[temp]
+            hash_count +=1
+            temp = (init + double_key*hash_count)%self.size
+        return None
+
+    def print_table(self):
+        for i in range (self.size):
+            print('{:4}'.format(str(i)),'',end ='')
+        print()
+        for i in range(self.size):
+            print('{:4}'.format(str(self.key_table[i])),'',end ='')
+        print()
+
+
+
+
