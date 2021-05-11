@@ -1,0 +1,96 @@
+class hashChaining:
+    class Node:
+        def __init__(self, key, next):
+            self.key = key
+            self.next = next
+
+    def __init__(self, size):
+        self.size = size
+        self.hash_table_node = [None] * size
+
+    def hash(self, key):
+        self.key = key
+        return key % self.size
+
+    def put(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table_node = self.hash_table_node[hash_key]
+        while temp_hash_table_node != None:
+            # 테이블이 비어있지 않다면 해당 테이블의 next 노드 생성
+            temp_hash_table_node = temp_hash_table_node.next
+        # next 노드 생성 후 키값에 이어지게 설정 (전위삽입) prev
+        self.hash_table_node[hash_key] = self.Node(key, self.hash_table_node[hash_key])
+        # 함수 종료
+        return None
+
+    def get(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table = self.hash_table_node[hash_key]
+        # 테이블이 비어있지 않다면 계속 탐색
+        while temp_hash_table != None:
+            # 주어진 key 값이 노드의 key 값과 일치한다면
+            if key == temp_hash_table.key:
+                ### key 값의 "순서" 반환
+                print(self.hash(key))
+                return
+            # 일치하지 않는다면 일치할때 까지 다음 노드 탐색
+            temp_hash_table = temp_hash_table.next
+        # 없을 경우 0
+        return print("0")
+
+    def delete(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table = self.hash_table_node[hash_key]
+        # 테이블이 비어있지 않다면 계속 탐색
+        while temp_hash_table != None:
+            # 주어진 key 값이 노드의 key 값과 일치한다면
+            if key == temp_hash_table.key:
+                # key 값 삭제 (초기화)
+                temp_hash_table.key = None
+                ### key 값의 "순서" 반환
+                print(self.hash(key))
+                return
+            # 일치하지 않는다면 일치할때 까지 다음 노드 탐색
+            temp_hash_table = temp_hash_table.next
+        # 없을 경우 0
+        return print("0")
+
+    def print_table(self):
+        for i in range(self.size):
+            print('%2d' % (i), end='')
+            temp = self.hash_table_node[i]
+            while temp != None:
+                print(' ', temp.key, end='')
+                temp = temp.next
+            print()
+
+    def print_hash(self):
+        for i in range(self.size):
+            temp = self.hash_table_node[i]
+            while temp != None:
+                print(temp.key, '', end='')
+                temp = temp.next
+        print()
+
+
+if __name__ == '__main__':
+    # 해시테이블 크기(size) 입력
+    hash = hashChaining(int(input()))
+
+    while (True):
+        text = input().split()
+        if text[0] == "i":
+            hash.put(int(text[1]))
+        if text[0] == "s":
+            hash.get(int(text[1]))
+        if text[0] == "d":
+            hash.delete(int(text[1]))
+        if text[0] == "p":
+            hash.print_hash()
+        if text[0] == "e":
+            exit()
+        if text[0] == "t":
+            hash.print_table()
