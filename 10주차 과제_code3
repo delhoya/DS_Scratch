@@ -48,6 +48,17 @@ class hashDouble:
             print('{:4}'.format(str(self.key_table[i])),'',end ='')
         print()
 
+if __name__ == '__main__':
 
-
-
+    t = hashDouble(13)
+    t.put(25,'G')
+    t.put(37,"a")
+    t.put(18,'b')
+    t.put(55,'c')
+    t.put(22,'m')
+    t.put(35,'l')
+    t.put(50,'o')
+    t.put(63,'w')
+    print(t.get(50))
+    print(t.get(63))
+    t.print_table()
