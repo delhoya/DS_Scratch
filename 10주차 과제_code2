@@ -1,59 +1,43 @@
 class hashLinear:
     def __init__(self,size):
         self.size = size
-        self.hash_key_table = [None] * size
+        self.key_table = [None] * size
         self.data_table = [None] * size
 
     def hash (self,key):
         return key % self.size
 
     def put (self,key,data):
-        # 처음 받은 key 값 해시값으로 변환
-        hash = self.hash(key)
-        # 변환한 hash 값 temp 에 저장
-        temp_hash = hash
+        init = self.hash(key)
+        temp = init
         count = 0
 
         while True:
-            # key -> Hash 값을 hash_key table 에 삽입하는 과정
-            if self.hash_key_table[temp_hash] == None:
-                self.hash_key_table[temp_hash] = key
-                self.data_table[temp_hash] = data
+            if self.key_table[temp] == None:
+                self.key_table[temp] = key
+                self.data_table[temp] = data
                 return
-            if self.hash_key_table[temp_hash] == key:
-                # 기존 key 값이라면 데이터 갱신만 해준다
-                print("c")
-                self.data_table[temp_hash] = data
+            if self.key_table[temp] == key:
+                self.data_table[temp] = data
 
-            # 데이터 삽입했으므로 count +1
             count +=1
-            # temp_hash 값 갱신 (한칸 뒤로 넘긴다)
-            temp_hash = (hash + count) % self.size
-            # 다음 hash 값과 똑같을때는? 저장실패 C 출력 -> 계속 한칸씩 옮겨가며 저장진행 ?
-            if temp_hash == hash :
+            temp = (init + count) % self.size
+
+            if temp == init :
                 break
 
     def get (self,key):
-        # 처음 받은 key 값 해시값으로 변환
-        hash = self.hash(key)
-        # 변환한 hash 값 temp 에 저장
-        temp_hash = hash
-        # 인덱스 1부터 시작
+        init = self.hash(key)
+        temp = init
         count =  1
 
-        # 키 테이블이 비어있을때까지 반복해서 탐색
-        while self.hash_key_table[temp_hash] != None:
-            # 키값이 일치한다면
-            if self.hash_key_table[temp_hash] == key:
-                # 데이터 값 리턴
-                return self.data_table[temp_hash]
+        while self.key_table[temp] != None:
+            if self.key_table[temp] == key:
+                return self.data_table[temp]
 
-            # 바로 옆 검사
-            temp_hash = (hash + count) % self.size
-            # 카운트 수 +1
+            temp = (init + count) % self.size
             count += 1
-            # 다음 hash 값과 똑같을때는? 탐색 실패
-            if temp_hash == hash :
+            if temp == init :
                 return None
         return None
 
@@ -62,7 +46,7 @@ class hashLinear:
             print('{:4}'.format(str(i)),'',end ='')
         print()
         for i in range(self.size):
-            print('{:4}'.format(str(self.hash_key_table[i])), '', end ='')
+            print('{:4}'.format(str(self.key_table[i])),'',end ='')
         print()
 
 if __name__ == '__main__':
