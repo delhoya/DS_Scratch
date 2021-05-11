@@ -14,7 +14,6 @@ class hashLinear:
         count = 0
 
         while True:
-
             if self.key_table[temp] == None:
                 self.key_table[temp] = key
                 self.data_table[temp] = data
@@ -34,12 +33,13 @@ class hashLinear:
         count =  1
 
         while self.key_table[temp] != None:
-            return self.data_table[temp]
+            if self.key_table[temp] == key:
+                return self.data_table[temp]
 
-        temp = (init + count) % self.size
-        count += 1
-        if temp == init :
-            return None
+            temp = (init + count) % self.size
+            count += 1
+            if temp == init :
+                return None
         return None
 
     def print_table(self):
@@ -49,3 +49,18 @@ class hashLinear:
         for i in range(self.size):
             print('{:4}'.format(str(self.key_table[i])),'',end ='')
         print()
+
+if __name__ == '__main__':
+
+    t = hashLinear(13)
+    t.put(25,'G')
+    t.put(37,"a")
+    t.put(18,'b')
+    t.put(55,'c')
+    t.put(22,'m')
+    t.put(35,'l')
+    t.put(50,'o')
+    t.put(63,'w')
+    print(t.get(50))
+    print(t.get(63))
+    t.print_table()
