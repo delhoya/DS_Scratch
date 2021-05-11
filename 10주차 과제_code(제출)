@@ -33,6 +33,9 @@ class hashChaining:
         # 테이블이 비어있지 않다면 계속 탐색
         while temp_hash_table != None:
             # 주어진 key 값이 노드의 key 값과 일치한다면
+            if temp_hash_table.key == None:
+                # 찾은 key 값이 None 값이면 다음 노드로 점프
+                temp_hash_table = temp_hash_table.next
             if key == temp_hash_table.key:
                 ### key 값의 "순서" 반환
                 print(count)
@@ -59,10 +62,10 @@ class hashChaining:
                 temp_hash_table.key = None
                 ### key 값의 "순서" 반환
                 #print(self.hash(key))
-                count -=1
                 return
             # 일치하지 않는다면 일치할때 까지 다음 노드 탐색
             temp_hash_table = temp_hash_table.next
+            count +=1
         # 없을 경우 0
         return print("0")
 
@@ -103,5 +106,6 @@ if __name__ == '__main__':
             hash.print_hash()
         if text[0] == "e":
             exit()
+        # 실행오류 해시 테이블 확인 하기 위한 함수 Print_table 추가 구현
         if text[0] == "t":
             hash.print_table()
