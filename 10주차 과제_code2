@@ -20,7 +20,7 @@ class hashLinear:
                 self.data_table[temp] = data
                 return
             if self.key_table[temp] == key:
-                self.d[temp] = data
+                self.data_table[temp] = data
 
             count +=1
             temp = (init + count) % self.size
