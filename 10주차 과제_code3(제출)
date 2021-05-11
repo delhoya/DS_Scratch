@@ -1,0 +1,89 @@
+class hashLinear:
+    # 생성시 M(사이즈)과 q(이중해싱 q) 를 넘겨받음
+    def __init__(self,size,double_key):
+        self.size = size
+        self.hash_key_table = ["0"] * size
+        self.double_key = double_key
+
+    def hash (self,key):
+        first_key = key % self.size
+        return first_key
+
+    def put (self,key):
+        # 처음 받은 key 값 해시값으로 변환
+        hash = self.hash(key)
+        # 변환한 hash 값 temp 에 저장
+        temp_hash = hash
+        count = 0
+        # 이중 해싱 키 생성
+        double_key = self.double_key - (key % self.double_key)
+
+        while True:
+            # key -> Hash 값을 hash_key table 에 삽입하는 과정
+            if self.hash_key_table[temp_hash] == "0":
+                self.hash_key_table[temp_hash] = key
+                # 삽입한 hash 값 리턴
+                print(self.hash(key))
+                return
+            # key_table 에서 충돌 일 경우 -> 이중해싱 진행
+            while self.hash_key_table[temp_hash] != "0":
+                # Crash (C) 충돌 출력
+                print("C",end='')
+                # 오른칸 이동
+                count +=1
+                # 해쉬 재설정 (이중해싱)
+                temp_hash = (hash + count*double_key) % self.size
+                # 비어있으면 삽입
+                if self.hash_key_table[temp_hash] == "0":
+                    self.hash_key_table[temp_hash] = key
+                    # 해쉬값 리턴
+                    print(temp_hash)
+                    return
+
+    def get (self,key):
+        # 처음 받은 key 값 해시값으로 변환
+        hash = self.hash(key)
+        # 변환한 hash 값 temp 에 저장
+        temp = hash
+        # 인덱스 1부터 시작
+        count =  1
+        double_key = self.double_key - (key % self.double_key)
+
+        # 키 테이블이 비어있을때까지 반복해서 탐색
+        while self.hash_key_table[temp] != "0":
+            # 키값이 일치한다면
+            if self.hash_key_table[temp] == key :
+                # 해시값, 키 값 리턴 함수 종료
+                return print(temp,key)
+            # 이중 해싱 검사
+            temp = (hash + count * double_key) % self.size
+            # 카운트 수 +1
+            count += 1
+            # 다음 hash 값과 똑같을때는? 탐색 실패 (-1 출력)
+            if temp == hash :
+                return print("-1")
+        # 테이블이 비어있을 경우 -1 출력
+        return print("-1")
+
+    def print_hash(self):
+        for i in range(self.size):
+            temp = self.hash_key_table[i]
+            print(temp,'',end = '')
+        print()
+
+if __name__ == '__main__':
+
+    number = input().split()
+    hash = hashLinear(int(number[0]),int(number[1]))
+
+    while (True):
+        text = input().split()
+        if text[0] == "i":
+            hash.put(int(text[1]))
+        if text[0] == "s":
+            hash.get(int(text[1]))
+        if text[0] == "p":
+            hash.print_hash()
+        if text[0] == "e":
+            hash.print_hash()
+            exit()
