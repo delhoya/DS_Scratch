@@ -1,3 +1,5 @@
+
+# 1 선형 조사법 
 class hashLinear:
     def __init__(self,size):
         self.size = size
@@ -79,3 +81,10 @@ if __name__ == '__main__':
             exit()
         if text[0] == "p":
             hash.print_hash()
+
+#2 이차조사법 
+
+
+#3 이중해시법
+
+#4 체이닝법
