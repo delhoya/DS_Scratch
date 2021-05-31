@@ -87,4 +87,208 @@ if __name__ == '__main__':
 
 #3 이중해시법
 
+class hashDouble:
+    # 생성시 M(사이즈)과 q(이중해싱 q) 를 넘겨받음
+    def __init__(self,size,double_key):
+        self.size = size
+        self.hash_key_table = ["0"] * size
+        self.double_key = double_key
+
+    def hash (self,key):
+        first_key = key % self.size
+        return first_key
+
+    def put (self,key):
+        # 처음 받은 key 값 해시값으로 변환
+        hash = self.hash(key)
+        # 변환한 hash 값 temp 에 저장
+        temp_hash = hash
+        count = 0
+        # 이중 해싱 키 생성
+        double_key = self.double_key - (key % self.double_key)
+
+        while True:
+            # key -> Hash 값을 hash_key table 에 삽입하는 과정
+            if self.hash_key_table[temp_hash] == "0":
+                self.hash_key_table[temp_hash] = key
+                # 삽입한 hash 값 리턴
+                print(self.hash(key))
+                return
+            # key_table 에서 충돌 일 경우 -> 이중해싱 진행
+            while self.hash_key_table[temp_hash] != "0":
+                # Crash (C) 충돌 출력
+                print("C",end='')
+                # 오른칸 이동
+                count +=1
+                # 해쉬 재설정 (이중해싱)
+                temp_hash = (hash + count*double_key) % self.size
+                # 비어있으면 삽입
+                if self.hash_key_table[temp_hash] == "0":
+                    self.hash_key_table[temp_hash] = key
+                    # 해쉬값 리턴
+                    print(temp_hash)
+                    return
+
+    def get (self,key):
+        # 처음 받은 key 값 해시값으로 변환
+        hash = self.hash(key)
+        # 변환한 hash 값 temp 에 저장
+        temp = hash
+        # 인덱스 1부터 시작
+        count =  1
+        double_key = self.double_key - (key % self.double_key)
+
+        # 키 테이블이 비어있을때까지 반복해서 탐색
+        while self.hash_key_table[temp] != "0":
+            # 키값이 일치한다면
+            if self.hash_key_table[temp] == key :
+                # 해시값, 키 값 리턴 함수 종료
+                return print(temp,key)
+            # 이중 해싱 검사
+            temp = (hash + count * double_key) % self.size
+            # 카운트 수 +1
+            count += 1
+            # 다음 hash 값과 똑같을때는? 탐색 실패 (-1 출력)
+            if temp == hash :
+                return print("-1")
+        # 테이블이 비어있을 경우 -1 출력
+        return print("-1")
+
+    def print_hash(self):
+        for i in range(self.size):
+            temp = self.hash_key_table[i]
+            print(temp,'',end = '')
+        print()
+
+if __name__ == '__main__':
+
+    number = input().split()
+    hash = hashDouble(int(number[0]),int(number[1]))
+
+    while (True):
+        text = input().split()
+        if text[0] == "i":
+            hash.put(int(text[1]))
+        if text[0] == "s":
+            hash.get(int(text[1]))
+        if text[0] == "p":
+            hash.print_hash()
+        if text[0] == "e":
+            hash.print_hash()
+            exit()
+
+
 #4 체이닝법
+
+class hashChaining:
+    class Node:
+        def __init__(self, key, next):
+            self.key = key
+            self.next = next
+
+    def __init__(self, size):
+        self.size = size
+        self.hash_table_node = [None] * size
+
+    def hash(self, key):
+        self.key = key
+        return key % self.size
+
+    def put(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table_node = self.hash_table_node[hash_key]
+        while temp_hash_table_node != None:
+            # 테이블이 비어있지 않다면 해당 테이블의 next 노드 생성
+            temp_hash_table_node = temp_hash_table_node.next
+        # next 노드 생성 후 키값에 이어지게 설정 (전위삽입) prev
+        self.hash_table_node[hash_key] = self.Node(key, self.hash_table_node[hash_key])
+        # 함수 종료
+        return None
+
+    def get(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table = self.hash_table_node[hash_key]
+        # 인덱스 변수 생성
+        count = 1
+        # 테이블이 비어있지 않다면 계속 탐색
+        while temp_hash_table != None:
+            # 주어진 key 값이 노드의 key 값과 일치한다면
+            if temp_hash_table.key == None:
+                # 찾은 key 값이 None 값이면 다음 노드로 점프
+                temp_hash_table = temp_hash_table.next
+            if key == temp_hash_table.key:
+                ### key 값의 "순서" 반환
+                print(count)
+                return
+            # 일치하지 않는다면 일치할때 까지 다음 노드 탐색
+            temp_hash_table = temp_hash_table.next
+            # 탐색 인덱스 1 증가
+            count +=1
+        # 없을 경우 0
+        return print("0")
+
+    def delete(self, key):
+        hash_key = self.hash(key)
+        # 해시키를 이용하여 노드 생성
+        temp_hash_table = self.hash_table_node[hash_key]
+        # 인덱스 변수 생성
+        count = 1
+        # 테이블이 비어있지 않다면 계속 탐색
+        while temp_hash_table != None:
+            # 주어진 key 값이 노드의 key 값과 일치한다면
+            if key == temp_hash_table.key:
+                print(count)
+                # key 값 삭제 (초기화)
+                temp_hash_table.key = None
+                ### key 값의 "순서" 반환
+                #print(self.hash(key))
+                return
+            # 일치하지 않는다면 일치할때 까지 다음 노드 탐색
+            temp_hash_table = temp_hash_table.next
+            count +=1
+        # 없을 경우 0
+        return print("0")
+
+    def print_table(self):
+        for i in range(self.size):
+            print('%2d' % (i), end='')
+            temp = self.hash_table_node[i]
+            while temp != None:
+                print(' ', temp.key, end='')
+                temp = temp.next
+            print()
+
+    def print_hash(self):
+        for i in range(self.size):
+            temp = self.hash_table_node[i]
+
+            while temp != None:
+                if temp.key == None:
+                    temp = temp.next
+                else:
+                    print(temp.key, '',end='')
+                    temp = temp.next
+        print()
+
+if __name__ == '__main__':
+    # 해시테이블 크기(size) 입력
+    hash = hashChaining(int(input()))
+
+    while (True):
+        text = input().split()
+        if text[0] == "i":
+            hash.put(int(text[1]))
+        if text[0] == "s":
+            hash.get(int(text[1]))
+        if text[0] == "d":
+            hash.delete(int(text[1]))
+        if text[0] == "p":
+            hash.print_hash()
+        if text[0] == "e":
+            exit()
+        # 실행오류 해시 테이블 확인 하기 위한 함수 Print_table 추가 구현
+        if text[0] == "t":
+            hash.print_table()
+
