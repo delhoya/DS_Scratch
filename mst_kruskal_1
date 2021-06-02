@@ -1,0 +1,29 @@
+
+class mst_kruskal:
+
+    # 노드의 부모 노드 인덱스
+    parent = []
+    # 전체 집합 갯수
+    set_size = 0
+
+    # 집합 초기화 함수
+    def init_set(nSets):
+        # 전역변수 사용 (사이즈, 부모노드)
+        global set_size ,parent
+        # 집합 개수 저장
+        set_size = nSets
+        # 모든 집합에 대해서
+        for i in range(nSets):
+            # 각각 고유의 집합 (부모 -1)
+            parent.append(-1)
+
+    def find(id):
+        while(parent[id]>=0):
+            id = parent[id]
+
+        return id
+
+    def union(s1,s2):
+        global set_size
+        parent[s1] = s2
+        set_size = set_size -1
