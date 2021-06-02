@@ -1,0 +1,64 @@
+import sys
+import heapq
+import math
+
+
+def dijkstra(start, graphs, weights):
+    shortest_path = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]  # 최단 경로 그래프
+    shortest_vertices = [-1 for _ in range(len(graphs))]  # 최단 경로 연결 정보 (-1로 초기화)
+    shortest_weights = [math.inf for _ in range(len(graphs))]  # 최단 경로 가중치 정보 (무한대 값으로 초기화)
+    visited = set()  # 방문 정보
+    heap = []  # 최소 힙
+
+    heapq.heappush(heap, (0, start))  # (가중치, 정점) 쌍으로 힙에 저장
+    shortest_weights[start] = 0  # 시작 정점 경로 길이 0으로 초기화
+
+    while len(heap) > 0:
+        pop = heapq.heappop(heap)
+        weight = pop[0]
+        vertex = pop[1]
+        visited.add(vertex)
+
+        for target, value in enumerate(graphs[vertex]):  # 인접한 간선 순회
+            if target in visited:
+                continue
+
+            if value == 1 and shortest_weights[vertex] + weights[vertex][target] < shortest_weights[target]:
+                heapq.heappush(heap, (weights[vertex][target], target))
+                shortest_weights[target] = shortest_weights[vertex] + weights[vertex][target]
+                shortest_vertices[target] = vertex
+
+    # 최단 경로 그래프 생성
+    for a, b in enumerate(shortest_vertices):
+        if b >= 0:
+            shortest_path[a][b] = 1
+            shortest_path[b][a] = 1
+
+    # 출력용
+    for row in shortest_path:
+        print(row)
+
+    return shortest_path
+
+
+if __name__ == "__main__":
+    graphs = [
+        [0, 1, 0, 0, 0, 1, 0],
+        [1, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 1, 0, 0],
+    ]
+    weights = [
+        [0, 8, 0, 0, 0, 15, 0],
+        [8, 0, 17, 0, 0, 0, 10],
+        [0, 17, 0, 27, 0, 0, 0],
+        [0, 0, 27, 0, 29, 0, 25],
+        [0, 0, 0, 29, 0, 21, 23],
+        [15, 0, 0, 0, 21, 0, 0],
+        [0, 10, 0, 25, 23, 0, 0],
+    ]
+
+    shortest_path = dijkstra(1, graphs, weights)
