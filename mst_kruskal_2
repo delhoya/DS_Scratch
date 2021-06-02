@@ -1,0 +1,78 @@
+import sys
+import heapq
+
+
+# 분리 집합 클래스
+class DisjointSet:
+    def __init__(self):
+        self.parent = None
+
+# 분리 집합 합집합 연산
+def unionset(set1, set2):
+    set2 = findset(set2)
+    set2.parent = set1
+
+# 분리 집합 부모 찾기
+def findset(set):
+    while set.parent != None:
+        set = set.parent
+    return set
+
+def kruskal(graphs, weights):
+    mst_graphs = [[0 for _ in range(len(graphs))] for _ in range(len(graphs))]  # 최소 신장 트리
+    vertex_sets = [DisjointSet() for _ in range(len(graphs))]  # 분리 집합 배열
+    visited = set()  # 방문 정보
+    heap = []  # 최소 힙
+
+    for vertex in range(len(graphs)):
+        for target in range(vertex, len(graphs)):
+            if weights[vertex][target] > 0:
+                heapq.heappush(heap, (weights[vertex][target], vertex, target))  # (가중치, 정점1, 정점2) 쌍으로 힙에 저장
+
+    weight_sum = 0
+
+    while len(heap) > 0:
+        pop = heapq.heappop(heap)
+        w = pop[0]
+        v1 = pop[1]
+        v2 = pop[2]
+        set1 = vertex_sets[v1]
+        set2 = vertex_sets[v2]
+        print('{}-{}: {}'.format(v1, v2, w))
+
+        if findset(set1) != findset(set2):  # 같은 집합이 아닐 경우
+            unionset(set1, set2)
+            # 최소 신장 트리 생성
+            mst_graphs[v1][v2] = 1
+            mst_graphs[v2][v1] = 1
+            weight_sum += weights[v1][v2]
+
+    # 출력용
+    print("최소 가중치 합: ", weight_sum)
+    for row in mst_graphs:
+        print(row)
+
+    return mst_graphs
+
+
+if __name__ == "__main__":
+    graphs = [
+        [0, 1, 0, 0, 0, 1, 0],
+        [1, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 1, 0, 0]
+    ]
+    weights = [
+        [0, 8, 0, 0, 0, 15, 0],
+        [8, 0, 17, 0, 0, 0, 10],
+        [0, 17, 0, 27, 0, 0, 0],
+        [0, 0, 27, 0, 29, 0, 25],
+        [0, 0, 0, 29, 0, 21, 23],
+        [15, 0, 0, 0, 21, 0, 0],
+        [0, 10, 0, 25, 23, 0, 0]
+    ]
+
+    mst_graphs = kruskal(graphs, weights)
