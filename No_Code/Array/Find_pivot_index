@@ -1,0 +1,28 @@
+from typing import List
+
+def pivotIndex(nums: List[int]) -> int:
+  # total sum 에서 pivot 을 옮겨가며 left right sum 비교  
+  total_sum = 0
+  
+  # 배열의 total sum 업데이트  
+  for num in nums:
+    total_sum += num
+
+  # 초기화 right_sum , left_sum , temp(이동 받아줄 변수)
+  right_sum = total_sum
+  left_sum = 0
+  tmp_num = 0
+
+  # 인덱스 번호와 컬렉션의 원소를 tuple형태로 반환
+  for idx,num in enumerate(nums):    
+    left_sum += tmp_num
+    # nums 의 num 만큼 이동 (업데이트)
+    tmp_num = num
+    right_sum -= num    
+    if left_sum == right_sum:
+      # 배열의 인덱스 / 해당 숫자 리턴      
+      return idx,num
+  # nums 를 다 돌아도 없으면 -1 리턴     
+  return -1
+
+print("[1,8,2,9,2,3,6] , pivot idx: ", pivotIndex([1,8,2,9,2,3,6]))
