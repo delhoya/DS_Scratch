@@ -2,14 +2,16 @@
 
 def firstUniqueChar(s: str) -> int:
     # 딕셔너리 생성 Key와 Value를 한 쌍 
-    count = {}
+    count = { }
     # str 에 있는 캐릭터 순회 O(n)
     for c in s:
       # 딕셔너리 get() - Key에 대응되는 Value 돌려줌 
       crnt_count = count.get(c)
       if crnt_count is None:
         count[c] = 1
+        # crnt_count 가 None 일 경우 count[c] =1 유지 
         continue      
+      # crnt_count 가 존재할 경우 값 +1 업데이트   
       count[c] += 1
       
     # 딕셔너리의 count 에 1 만 저장된 인덱스 리턴     
