@@ -1,0 +1,35 @@
+# 문제: 주어진 두 string s와 t가 isomorphic 관계인지 찾아서 return하여라
+
+def isIsomorphic(s: str, t: str) -> bool:
+    # str 타입 2개를 받아서 Boolean 타입으로 리턴
+    # s 와 t 의 길이가 다르면 당연히 False 
+    if len(s) != len(t):
+      return False
+    # s의 길이 저장 
+    str_length = len(s)
+    
+    # 딕셔너리 2개 생성 
+    table1 = {}
+    table2 = {}
+    
+    # s의 길이만큼 순회 
+    for idx in range(0,str_length):
+      # 딕셔너리 1의 key - value / value 반환 각각 match1 , match2   
+      match1 = table1.get(s[idx])
+      match2 = table2.get(t[idx])
+      # 비어있지 않고 있다면 
+      if match1 is None and match2 is None:
+        # 테이블1 테이블2 동기화  ? 
+        table1[s[idx]] = t[idx]
+        table2[t[idx]] = s[idx]
+        continue
+        
+        # match 1 , match 2 동에 움직인다면 계속 진행 
+      elif match1 == t[idx] and match2 == s[idx]:
+        continue
+        # 그것도 아니라면 False 리턴 
+      return False
+    
+    return True
+
+isIsomorphic(s="aaaccd", t="xxxyyz")
