@@ -9,7 +9,7 @@ def findPeak(nums: List[int]) -> int:
   left = 0
   right = len(nums)-1
   
-  # left 가 right 작을때까지 이진탐색 nlog(n)   
+  # left 가 right 작을때까지 이진탐색 (속도: nlog(n))   
   while left < right:
     # 중간 인덱스 pivot 지정    
     pivot = int ((left+right)/2)
