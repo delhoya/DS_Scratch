@@ -20,7 +20,7 @@ def pivotIndex(nums: List[int]) -> int:
     tmp_num = num
     right_sum -= num    
     if left_sum == right_sum:
-      # 객체(배열) 의 인덱스 / 해당 숫자 리턴      
+      # 객체(배열) 의 인덱스 / 해당 숫자 리턴 함수 & 종료       
       return idx,num
   # nums 를 다 돌아도 없으면 -1 리턴     
   return -1
