@@ -1,0 +1,178 @@
+
+from scipy.io import wavfile
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy import stats
+
+# 파일 경로 지정 (WAV 확장자 주의)
+sample_rate,data = wavfile.read('C:/Users/user/Documents/Audacity/210527_sin_500Hz_-3dBFS_0.01s_120cm_1bound_MIC1.wav')
+
+amount_of_samples = len(data)
+length_of_sound = amount_of_samples / sample_rate
+print("Amplitude raw_data:",data)
+print("샘플링 레이트:",sample_rate)
+print("총 샘플 수:",amount_of_samples)
+print("파일 길이(Sec):",length_of_sound)
+
+# 추출한 데이터 (signal 값) signal_data 객체에 저장
+signal_data = data
+# - 1 TO 1 로 변환 시키기  (Scaled_data) (16bit 기준)
+scaled_data = data / 2.**15
+# np.array 함수 사용 (처음,마지막,간격) , 인덱스 / 샘플링 레이트
+time_array = np.arange(0,float(amount_of_samples),1)/sample_rate
+
+# 시그널 값 저장
+# raw_data 획득 및 저장 dataframe / to_csv
+mic_signal_table = pd.DataFrame(data=signal_data)
+print("시그널 데이터 모양",mic_signal_table.shape)
+mic_signal_table.to_csv('C:/Users/user/Documents/Audacity/210527_sin_500Hz_-3dBFS_0.01s_120cm_1bound_MIC1.csv')
+
+#plt.plot 함수(x,y)
+plt.plot(time_array,scaled_data,linewidth = 0.3 , alpha = 0.7 , color ="#004bc6")
+plt.title("Mic raw raw_data(WAV)")
+plt.xlabel("time(s)")
+plt.ylabel("amplitude")
+
+plt.show()
+
+# index / freq = time
+# signal data가 max 일때의 인덱스값 저장 argmax 함수
+# max 일때의 value 값은 인덱스에 저장
+index_of_raw_max = np.argmax(signal_data)
+value_of_raw_max = signal_data[index_of_raw_max]
+
+#min 값일때 index 저장 / value 저장
+index_of_raw_min = np.argmin(signal_data)
+value_of_raw_min = signal_data[index_of_raw_min]
+
+"""
+# 시그널 데이터 맥스값에서 비율 조정 where 함수
+index_of_raw_max_10 = np.where(signal_data > value_of_raw_max // 10)[0][0]
+index_of_raw_max_25 = np.where(signal_data > value_of_raw_max // 4)[0][0]
+index_of_raw_max_50 = np.where(signal_data > value_of_raw_max // 2)[0][0]
+index_of_raw_max_75 = np.where(signal_data > (value_of_raw_max // 4) * 3)[0][0]
+
+value_of_raw_max_25 = signal_data[index_of_raw_max_25]
+value_of_raw_max_50 = signal_data[index_of_raw_max_50]
+value_of_raw_max_75 = signal_data[index_of_raw_max_75]
+"""
+
+"""
+print("max값:",value_of_raw_max)
+print("max index:" ,index_of_raw_max)
+print('max time 10%:',index_of_raw_max_10/16000)
+print('max time 25%:',index_of_raw_max_25/16000)
+print('max time 50%:',index_of_raw_max_50/16000)
+print('max time 75%:',index_of_raw_max_75/16000)
+print('max time:',index_of_raw_max/16000)
+print('min time:',index_of_raw_min/16000)
+"""
+
+# matplotlib.pyplot.specgram : https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.specgram.html
+# raw_data : array / FS : sampling time / NFFT : The number of raw_data points used in each block for the FFT. A power 2 is most efficient. / Cmap : color map)
+# 이론적 배경 : https://sanghyu.tistory.com/37?category=1120070
+spectrum,freqs,t,im = plt.specgram(data,Fs=sample_rate,NFFT=1024,cmap=plt.get_cmap('autumn_r'))
+cbar = plt.colorbar(im)
+
+plt.title("Fourier transform")
+plt.xlabel('time(s)')
+plt.ylabel('frequency(Hz)')
+cbar.set_label("intensity(dB)")
+"""
+plt.show()
+"""
+
+# Fourier Transform 한 주파수 (Freqs Spectrum) raw_data dB 변경
+index_of_frequency = np.where(freqs==250)[0][0]
+data_for_frequency = spectrum[index_of_frequency]
+data_in_db = 10 * np.log10(data_for_frequency)
+plt.plot(t,data_in_db,linewidth =1,alpha=0.7,color='#004bc6')
+plt.title("Time(s) - dB")
+plt.xlabel('time(s)')
+plt.ylabel('power(dB)')
+plt.show()
+
+# raw_data 획득 및 저장 dataframe / to_csv (DB값 저장)
+data_in_db_table = pd.DataFrame(data=data_in_db)
+print("DB 데이터 모양",data_in_db_table.shape)
+"""
+data_in_db_table.to_csv('C:/Users/user/Documents/Audacity/210517_test (linear)(0)_normal_mic3___DB.csv')
+"""
+
+index_of_max = np.argmax(data_in_db)
+value_of_max = data_in_db[index_of_max]
+# plt.plot 추가
+plt.plot(t[index_of_max],data_in_db[index_of_max],'go')
+
+sliced_array = data_in_db[index_of_max:]
+
+# max value 에서 -5 dB 값 저장
+value_of_max_less_5 = value_of_max - 5
+def find_index(array, value):
+    array = np.asarray(array)
+    idx = (np.abs(array-value)).argmin()
+    return array[idx]
+
+
+value_of_max_less_5 = find_index(sliced_array, value_of_max_less_5)
+index_of_max_less_5 = np.where(data_in_db == value_of_max_less_5)
+
+plt.plot(t[index_of_max_less_5],data_in_db[index_of_max_less_5],'yo')
+
+value_of_max_less_25 = value_of_max - 25
+value_of_max_less_25 = find_index(sliced_array, value_of_max_less_25)
+index_of_max_less_25 = np.where(data_in_db == value_of_max_less_25)
+
+plt.plot(t[index_of_max_less_5],data_in_db[index_of_max_less_25],'ro')
+plt.plot(t,data_in_db,linewidth =1,alpha=0.7,color='#004bc6')
+plt.title("dB")
+plt.xlabel('time(s)')
+plt.ylabel('power(dB)')
+"""
+plt.show()
+"""
+
+
+value_of_max_less_35 = value_of_max - 35
+value_of_max_less_35 = find_index(sliced_array, value_of_max_less_35)
+index_of_max_less_35 = np.where(data_in_db == value_of_max_less_35)[0][0]
+
+
+# slope 를 그리기 위한 index 지정 (-35dB) max_less = -35bb dB
+x = t[index_of_max: index_of_max_less_35]
+y = data_in_db[index_of_max: index_of_max_less_35]
+
+slope,intercept,r_value,p_value,std_err = stats.linregress(x,y)
+linregress = intercept + slope * x
+plt.plot(t,data_in_db,linewidth =1,alpha=0.7,color='#004bc6')
+plt.title("linear regression")
+plt.xlabel('time(s)')
+plt.ylabel('power(dB)')
+"""
+plt.show()
+"""
+
+rt20 = (t[index_of_max_less_5]-t[index_of_max_less_25])[0]
+rt30 = (t[index_of_max_less_5]-t[index_of_max_less_35])[0]
+rt60 = 3 * rt20
+
+print(abs(rt20))
+print(abs(rt30))
+
+
+
+"""
+value_of_max_less_60 = value_of_max - 60
+value_of_max_less_60 = find_index(sliced_array, value_of_max_less_60)
+index_of_max_less_60 = np.where(data_in_db == value_of_max_less_60)[0][0]
+
+x = t[index_of_max: index_of_max_less_60]
+y = data_in_db[index_of_max: index_of_max_less_60]
+
+slope,intercept,r_value,p_value,std_err = stats.linregress(x,y)
+plt.plot(x, intercept + slope * x , 'r' , label = 'linear regression')
+linregress = intercept + slope * x
+plt.plot(t,data_in_db,linewidth =1,alpha=0.7,color='#004bc6')
+plt.show()
+"""
