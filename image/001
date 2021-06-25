@@ -1,0 +1,112 @@
+
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import pandas as pd
+
+# 이미지 경로 설정
+Images_Path_name = 'C:/Users/user/Desktop/CsI_GOS_BoneBodyIodine'
+Images_file_name_list = os.listdir(Images_Path_name)
+Images_nums = len(Images_file_name_list)
+
+# CsI , Gos 리스트 구분
+Scintillator_list = ['CsI','GOS']    #'CsI' or 'GOS' 입력
+Images_Scintillator_list_0 = []
+Images_Scintillator_list_1 = []
+
+for i in range(Images_nums):
+
+    if Scintillator_list[0] in Images_file_name_list[i]:
+        Images_Scintillator_list_0.append(Images_file_name_list[i])
+
+    elif Scintillator_list[1] in Images_file_name_list[i] :
+        Images_Scintillator_list_1.append(Images_file_name_list[i])
+
+Images_Scintillator_list_0_num = len(Images_Scintillator_list_0)
+Images_Scintillator_list_1_num = len(Images_Scintillator_list_1)
+
+# 이미지 전처리 용도 임시 np.array 생성
+X_pixel = 200
+Y_pixel = 200
+image_temp_np_array = np.zeros([X_pixel*Y_pixel])
+
+# 이미지 반복 추출 진행 (1)
+for i in range(Images_Scintillator_list_0_num):
+    with open(Images_Path_name + '/' + Images_Scintillator_list_0[i], "rb") as file:
+        float_data = np.fromfile(file,dtype='f4')
+        image_temp_np_array += float_data
+    # 평균 값 구하기
+image_temp_np_array /= Images_Scintillator_list_0_num
+    # reshpae() - 40000 to 200 x 200 pixcel
+image_float_data_reshape = image_temp_np_array.reshape(X_pixel, Y_pixel)
+
+image_temp_np_array1 = np.zeros([X_pixel * Y_pixel])
+# 이미지 반복 추출 진행 (2)
+for i in range(Images_Scintillator_list_1_num):
+    with open(Images_Path_name + '/' + Images_Scintillator_list_1[i], "rb") as file2:
+        float_data1 = np.fromfile(file2, dtype='f4')
+        image_temp_np_array1 += float_data1
+    # 평균 값 구하기
+image_temp_np_array1 /= Images_Scintillator_list_1_num
+    # reshpae() - 40000 to 200 x 200 pixcel
+image_float_data_reshape1 = image_temp_np_array1.reshape(X_pixel, Y_pixel)
+
+# 그래프 생성 imshow , colorbar , show
+plt.subplots(figsize=(10, 4))
+plt.subplot(1,2,1)
+plt.title(Scintillator_list[0]+"_AVG")
+plt.imshow(image_float_data_reshape)
+plt.colorbar()
+
+plt.subplot(1,2,2)
+plt.title(Scintillator_list[1]+"_AVG")
+plt.imshow(image_float_data_reshape1)
+plt.colorbar()
+
+# 1. 그림 추출할 구간 정하기  전체 data 40000 / 20x20(400) * 27 = 10800 개
+
+# 범위 지정을 위한 x 리스트 생성
+x_range_list = [x for x in range (10,30,1)]
+y_range_list = [y for y in range (40,60,1)]
+print(x_range_list)
+print(y_range_list)
+
+plt.scatter(10,40)
+plt.scatter(30,40)
+plt.scatter(10,60)
+plt.scatter(30,60)
+
+# 범위 지정 사각형 그리기 matplotlib.patches.Rectangle( (2사분면모서리좌표), 가로길이,세로길이)
+
+Rectangle_shape = patches.Rectangle((14,44),11,11,color='b')
+plt.gca().add_patch(Rectangle_shape)
+
+# 이미지 격자 평균값 저장 np.array 생성
+X_window_avg_pixel = 3
+Y_window_avg_pixel = 9
+image_window_avg_np_array = np.zeros([X_window_avg_pixel * Y_window_avg_pixel])
+image_window_avg_np_array_reshape = image_window_avg_np_array.reshape(X_window_avg_pixel,Y_window_avg_pixel)
+
+print(image_window_avg_np_array_reshape)
+print(image_window_avg_np_array_reshape.shape)
+
+
+# 2차원 배열 슬라이싱 함수 [:]
+image_float_data_reshape1_window_1 = image_float_data_reshape1[15:25,45:55]
+print(image_float_data_reshape1_window_1)
+print(np.mean(image_float_data_reshape1_window_1))
+
+image_window_avg_np_array_reshape += np.mean(image_float_data_reshape1_window_1)
+
+print(image_window_avg_np_array_reshape)
+print(image_window_avg_np_array_reshape.shape)
+
+
+# 그래프 출력
+#plt.show()
+
+
+
+
+
