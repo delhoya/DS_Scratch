@@ -109,4 +109,9 @@ print(image_window_avg_np_array_reshape.shape)
 
 
 
+plt.hist(data,bins = 10)
+plt.xlabel ('값)
+plt.ylabel('개수')
+plt.grid(True)
+
 
