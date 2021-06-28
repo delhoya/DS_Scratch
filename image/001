@@ -2,12 +2,15 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import stats
+from sklearn.linear_model import LinearRegression
+import seaborn as sns
 import matplotlib.patches as patches
 import pandas as pd
 
 # 이미지 경로 설정
-Images_Path_name = 'C:/Users/user/Desktop/CsI_GOS_BoneBodyIodine'
-Images_file_name_list = os.listdir(Images_Path_name)
+Images_path_name = 'C:/Users/user/Desktop/CsI_GOS_BoneBodyIodine'
+Images_file_name_list = os.listdir(Images_path_name)
 Images_nums = len(Images_file_name_list)
 
 # CsI , Gos 리스트 구분
@@ -33,85 +36,237 @@ image_temp_np_array = np.zeros([X_pixel*Y_pixel])
 
 # 이미지 반복 추출 진행 (1)
 for i in range(Images_Scintillator_list_0_num):
-    with open(Images_Path_name + '/' + Images_Scintillator_list_0[i], "rb") as file:
+    with open(Images_path_name + '/' + Images_Scintillator_list_0[i], "rb") as file:
         float_data = np.fromfile(file,dtype='f4')
         image_temp_np_array += float_data
     # 평균 값 구하기
 image_temp_np_array /= Images_Scintillator_list_0_num
     # reshpae() - 40000 to 200 x 200 pixcel
-image_float_data_reshape = image_temp_np_array.reshape(X_pixel, Y_pixel)
+image_float_data_reshape_0 = image_temp_np_array.reshape(X_pixel, Y_pixel)
 
 image_temp_np_array1 = np.zeros([X_pixel * Y_pixel])
 # 이미지 반복 추출 진행 (2)
 for i in range(Images_Scintillator_list_1_num):
-    with open(Images_Path_name + '/' + Images_Scintillator_list_1[i], "rb") as file2:
+    with open(Images_path_name + '/' + Images_Scintillator_list_1[i], "rb") as file2:
         float_data1 = np.fromfile(file2, dtype='f4')
         image_temp_np_array1 += float_data1
     # 평균 값 구하기
 image_temp_np_array1 /= Images_Scintillator_list_1_num
     # reshpae() - 40000 to 200 x 200 pixcel
-image_float_data_reshape1 = image_temp_np_array1.reshape(X_pixel, Y_pixel)
+image_float_data_reshape_1 = image_temp_np_array1.reshape(X_pixel, Y_pixel)
 
 # 그래프 생성 imshow , colorbar , show
 plt.subplots(figsize=(10, 4))
 plt.subplot(1,2,1)
 plt.title(Scintillator_list[0]+"_AVG")
-plt.imshow(image_float_data_reshape)
+plt.imshow(image_float_data_reshape_0)
 plt.colorbar()
 
 plt.subplot(1,2,2)
 plt.title(Scintillator_list[1]+"_AVG")
-plt.imshow(image_float_data_reshape1)
+plt.imshow(image_float_data_reshape_1)
 plt.colorbar()
 
-# 1. 그림 추출할 구간 정하기  전체 data 40000 / 20x20(400) * 27 = 10800 개
+############################################################################
 
-# 범위 지정을 위한 x 리스트 생성
-x_range_list = [x for x in range (10,30,1)]
-y_range_list = [y for y in range (40,60,1)]
-print(x_range_list)
-print(y_range_list)
+# 1. 그림 추출할 구간 정하기  전체 data 40000 / 10x10(100) * 27 = 2700 개
+# 2차원 배열 슬라이싱 함수 [:] (for 격차 추출)
 
+############################################################################
+
+
+"""
+#격자 무늬 확인을 위한 임시 점 찍기  
 plt.scatter(10,40)
 plt.scatter(30,40)
 plt.scatter(10,60)
 plt.scatter(30,60)
 
 # 범위 지정 사각형 그리기 matplotlib.patches.Rectangle( (2사분면모서리좌표), 가로길이,세로길이)
+Rectangle_shape = patches.Rectangle((15,45),10,10,color='b')
+Rectangle_shape2 = patches.Rectangle((35,45),10,10,color = 'b')
 
-Rectangle_shape = patches.Rectangle((14,44),11,11,color='b')
+Rectangle_shape3 = patches.Rectangle((15,95),10,10,color='r')
+Rectangle_shape4 = patches.Rectangle((35,95),10,10,color='r')
+
+Rectangle_shape5 = patches.Rectangle((15,145),10,10,color='b')
+Rectangle_shape6 = patches.Rectangle((35,145),10,10,color='b')
+
 plt.gca().add_patch(Rectangle_shape)
+plt.gca().add_patch(Rectangle_shape2)
+plt.gca().add_patch(Rectangle_shape3)
+plt.gca().add_patch(Rectangle_shape4)
+plt.gca().add_patch(Rectangle_shape5)
+plt.gca().add_patch(Rectangle_shape6)
 
-# 이미지 격자 평균값 저장 np.array 생성
-X_window_avg_pixel = 3
-Y_window_avg_pixel = 9
-image_window_avg_np_array = np.zeros([X_window_avg_pixel * Y_window_avg_pixel])
-image_window_avg_np_array_reshape = image_window_avg_np_array.reshape(X_window_avg_pixel,Y_window_avg_pixel)
+"""
 
-print(image_window_avg_np_array_reshape)
-print(image_window_avg_np_array_reshape.shape)
+# 전체 데이터 그래프 출력
+plt.show()
 
+"""
+# 전체 데이터 히스토그램 생성 및 분포 확인
+plt.subplots(figsize=(10, 10))
+plt.subplot(1,2,1)
+plt.hist(image_float_data_reshape_0,bins=30)
+plt.xlim([6000, 10000])      # X축의 범위: [xmin, xmax]
+plt.ylim([0, 35])      # y축의 범위: [xmin, xmax]
 
-# 2차원 배열 슬라이싱 함수 [:]
-image_float_data_reshape1_window_1 = image_float_data_reshape1[15:25,45:55]
-print(image_float_data_reshape1_window_1)
-print(np.mean(image_float_data_reshape1_window_1))
+plt.subplot(1,2,2)
+plt.hist(image_float_data_reshape_1,bins=30)
+plt.xlim([2600, 3100])      # X축의 범위: [xmin, xmax]
+plt.ylim([0, 35])      # y축의 범위: [xmin, xmax]
+#plt.show()
+"""
+"""
+# 샘플 분포된 곳의 히스토그램 생성 및 분포 확인
+pooling_window_0_0_test = image_float_data_reshape_0[45:55, :]
+pooling_window_1_0_test = image_float_data_reshape_0[95:105, :]
+pooling_window_2_0_test = image_float_data_reshape_0[145:155, :]
 
-image_window_avg_np_array_reshape += np.mean(image_float_data_reshape1_window_1)
-
-print(image_window_avg_np_array_reshape)
-print(image_window_avg_np_array_reshape.shape)
-
-
-# 그래프 출력
+plt.subplots(figsize=(10, 10))
+plt.subplot(1,3,1)
+plt.hist(pooling_window_0_0_test)
+plt.subplot(1,3,2)
+plt.hist(pooling_window_1_0_test)
+plt.subplot(1,3,3)
+plt.hist(pooling_window_2_0_test)
 #plt.show()
 
 
+# 범위 지정을 위한 임시 x 리스트 생성
+x_range_list = [x for x in range (10,30,1)]
+y_range_list = [y for y in range (40,60,1)]
+print(x_range_list)
+print(y_range_list)
+"""
+
+# 풀링 범위로 지정된 데이터 추출 (x,y 범위지정)
+# 각 풀링의 전체 데이터를 저장할 임시 3차원 생성
+X_pooling_avg = 10
+Y_pooling_avg = 10
+pooling_data_list_A = np.zeros((9, X_pooling_avg, Y_pooling_avg))
+pooling_data_list_B = np.zeros((9, X_pooling_avg, Y_pooling_avg))
+pooling_data_list_C = np.zeros((9, X_pooling_avg, Y_pooling_avg))
+pooling_data_list_A_1 = np.zeros((9, X_pooling_avg, Y_pooling_avg))
+pooling_data_list_B_1 = np.zeros((9, X_pooling_avg, Y_pooling_avg))
+pooling_data_list_C_1 = np.zeros((9, X_pooling_avg, Y_pooling_avg))
 
 
-plt.hist(data,bins = 10)
-plt.xlabel ('값)
-plt.ylabel('개수')
-plt.grid(True)
+# 풀링 후 데이터 넘파이 리스트에 저장
+padding_index_range = [ n for n in range(9)]
+window_range = [ n*20 for n in range(9)]
+
+for i,j in zip(padding_index_range,window_range):
+    pooling_data_list_A[i] = image_float_data_reshape_0[45:55, 15+j:25+j]
+    pooling_data_list_B[i] = image_float_data_reshape_0[95:105,15+j:25+j]
+    pooling_data_list_C[i] = image_float_data_reshape_0[145:155,15+j:25+j]
+    pooling_data_list_A_1[i] = image_float_data_reshape_1[45:55, 15+j:25+j]
+    pooling_data_list_B_1[i] = image_float_data_reshape_1[95:105,15+j:25+j]
+    pooling_data_list_C_1[i] = image_float_data_reshape_1[145:155,15+j:25+j]
+
+"""
+# 풀링 데이터 출력 테스트 확인
+for i ,j in zip(padding_index_range,window_range):
+    print("{}번째 패딩 출력 {}만큼 이동".format(i,j))
+    print(pooling_data_list_B[i])
+
+"""
+"""
+# 패딩된 데이터 히스토그램 생성 및 분포 확인
+plt.subplots(figsize=(10,10))
+for i in range(9):
+    plt.subplot(3,3,i+1)
+    plt.hist(pooling_data_list_A[i],bins = 5)
+    plt.subplot(3,3,i+4)
+    plt.hist(pooling_data_list_B[i],bins = 5)
+    plt.subplot(3,3,i+7)
+    plt.hist(pooling_data_list_C[i], bins=5)
+    i += 1
+plt.show()
+"""
+
+# 각 패딩의 평균값을 저장할 list 생성
+pooling_avg_list_A = np.array(range(9))
+pooling_avg_list_B = np.array(range(9))
+pooling_avg_list_C = np.array(range(9))
+pooling_avg_list_A_1 = np.array(range(9))
+pooling_avg_list_B_1 = np.array(range(9))
+pooling_avg_list_C_1 = np.array(range(9))
 
 
+# 범위 지정 데이터 평균값 계산 하기
+for i in range(9):
+    pooling_avg_list_A[i]= np.mean(pooling_data_list_A[i])
+    pooling_avg_list_B[i]= np.mean(pooling_data_list_B[i])
+    pooling_avg_list_C[i]= np.mean(pooling_data_list_C[i])
+    pooling_avg_list_A_1[i] = np.mean(pooling_data_list_A_1[i])
+    pooling_avg_list_B_1[i] = np.mean(pooling_data_list_B_1[i])
+    pooling_avg_list_C_1[i] = np.mean(pooling_data_list_C_1[i])
+    i += 1
+print("CsI")
+print("CSI-A",pooling_avg_list_A)
+print("CSI-B",pooling_avg_list_B)
+print("CSI-C",pooling_avg_list_C)
+print("GOS")
+print("GOS-A",pooling_avg_list_A_1)
+print("GOS-B",pooling_avg_list_B_1)
+print("GOS-C",pooling_avg_list_C_1)
+
+
+# 패딩된 데이터 히스토그램 생성 및 분포 확인
+plt.subplots(figsize=(15,5))
+plt.subplot(1,3,1)
+plt.xlabel("CsI_A")
+plt.ylabel("GOS_A")
+plt.scatter(pooling_avg_list_A,pooling_avg_list_A_1)
+slope , intercept , r_value , p_value, std_err = stats.linregress(pooling_avg_list_A,pooling_avg_list_A_1)
+print("A물질 CsI,GOS 선형 회귀 진행 1.기울기: {} , 2.Y절편 : {} ,3. R^2 :{} ".format(slope,intercept,r_value**2))
+
+plt.subplot(1,3,2)
+plt.xlabel("CsI_B")
+plt.ylabel("GOS_B")
+plt.scatter(pooling_avg_list_B,pooling_avg_list_B_1)
+slope , intercept , r_value , p_value, std_err = stats.linregress(pooling_avg_list_B,pooling_avg_list_B_1)
+print("B물질 CsI,GOS 선형 회귀 진행 1.기울기: {} , 2.Y절편 : {} ,3. R^2 :{} ".format(slope,intercept,r_value**2))
+
+
+plt.subplot(1,3,3)
+plt.xlabel("CsI_C")
+plt.ylabel("GOS_C")
+plt.scatter(pooling_avg_list_C,pooling_avg_list_C_1)
+slope , intercept , r_value , p_value, std_err = stats.linregress(pooling_avg_list_C,pooling_avg_list_C_1)
+print("C물질 CsI,GOS 선형 회귀 진행 1.기울기: {} , 2.Y절편 : {} ,3. R^2 :{} ".format(slope,intercept,r_value**2))
+plt.show()
+
+
+
+
+"""
+# 선형회귀 학습 모델
+
+W = 0.0
+b = 0.0
+
+n_data = len(pooling_avg_list_A)
+
+epochs = 5000
+learning_rate = 0.01
+
+for i in range(epochs):
+    hypothesis = pooling_avg_list_A * W + b
+    cost = np.sum((hypothesis - pooling_avg_list_A_1) ** 2) / n_data
+    gradient_w = np.sum((W * pooling_avg_list_A - pooling_avg_list_A_1 + b) * 2 * pooling_avg_list_A) / n_data
+    gradient_b = np.sum((W * pooling_avg_list_A - pooling_avg_list_A_1 + b) * 2) / n_data
+
+    W -= learning_rate * gradient_w
+    b -= learning_rate * gradient_b
+
+    if i % 100 == 0:
+        print('Epoch ({:10d}/{:10d}) cost: {:10f}, W: {:10f}, b:{:10f}'.format(i, epochs, cost, W, b))
+
+print('W: {:10f}'.format(W))
+print('b: {:10f}'.format(b))
+print('result : ')
+print(pooling_avg_list_A * W + b)
+"""
